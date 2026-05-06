@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI4Gov-X Extracurricular Activities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1E74D5;
+      --secondary: #E5F8FF;
+      --text: #3F3F3F;
+      --accent: #6EC1E4;
+      --link: #39C9FF;
+      --white: #FFFFFF;
+      --line: #D7ECFA;
+      --muted: #6A7A89;
+      --shadow: 0 20px 50px rgba(30, 116, 213, 0.13);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--white);
+      color: var(--text);
+      font-family: "Saira", Arial, sans-serif;
+      font-weight: 500;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid rgba(30, 116, 213, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      width: min(1140px, calc(100% - 48px));
+      min-height: 86px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .logo {
+      width: 150px;
+      height: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--primary);
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .nav-cta,
+    .button {
+      border: 1px solid var(--primary);
+      border-radius: 999px;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      min-height: 42px;
+      padding: 10px 18px;
+      transition: 160ms ease;
+    }
+
+    .nav-cta,
+    .button.primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .button.secondary {
+      background: var(--white);
+    }
+
+    .button:hover,
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(30, 116, 213, 0.18);
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .hero-wrap {
+      width: min(1220px, calc(100% - 48px));
+      margin: 30px auto 0;
+    }
+
+    .hero {
+      min-height: 560px;
+      border-radius: 40px;
+      background:
+        linear-gradient(90deg, rgba(30, 116, 213, 0.92), rgba(30, 116, 213, 0.68) 45%, rgba(30, 116, 213, 0.42)),
+        url("ai4gov-hero.png") center / cover no-repeat;
+      color: var(--white);
+      display: grid;
+      align-items: center;
+      padding: 72px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 740px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      padding: 6px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.13);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 26px 0 18px;
+      color: var(--white);
+      font-size: clamp(44px, 5vw, 70px);
+      line-height: 1.02;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 700px;
+      font-size: 20px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .hero-actions .button.secondary {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .hero-actions .button.primary {
+      border-color: var(--white);
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    .stats {
+      width: min(1080px, calc(100% - 72px));
+      margin: -54px auto 0;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 28px 24px;
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:last-child {
+      border-right: 0;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--primary);
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .intro {
+      width: min(1140px, calc(100% - 48px));
+      margin: 74px auto 0;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: stretch;
+    }
+
+    .intro h2,
+    .catalogue h2 {
+      color: var(--primary);
+      font-size: 42px;
+      line-height: 1.08;
+      margin: 0 0 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .intro p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .quality-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--secondary);
+      padding: 28px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .quality-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-family: "Roboto", Arial, sans-serif;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(30, 116, 213, 0.14);
+    }
+
+    .quality-item strong {
+      color: var(--primary);
+      display: block;
+      font-size: 17px;
+      margin-bottom: 2px;
+    }
+
+    .quality-item span {
+      color: var(--text);
+      display: block;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .catalogue {
+      width: min(1140px, calc(100% - 48px));
+      margin: 74px auto 96px;
+    }
+
+    .catalogue-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 26px;
+    }
+
+    .catalogue-head p {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 87px;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) repeat(3, 180px) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 16px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 38px rgba(30, 116, 213, 0.10);
+      backdrop-filter: blur(12px);
+    }
+
+    .field {
+      min-height: 48px;
+      border: 1px solid var(--primary);
+      border-radius: 999px;
+      color: var(--primary);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field.search {
+      justify-content: flex-start;
+      gap: 10px;
+      color: var(--primary);
+    }
+
+    .field.select {
+      justify-content: space-between;
+    }
+
+    .reset {
+      min-height: 48px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--secondary);
+      color: var(--primary);
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .result-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0 0 16px;
+      padding: 0 4px;
+    }
+
+    .result-count {
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .result-count span {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .view-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--secondary);
+    }
+
+    .view-button {
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--primary);
+      font-family: "Roboto", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .view-button.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .mode-hint {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 24px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--secondary);
+      color: var(--primary);
+      border: 1px solid rgba(30, 116, 213, 0.18);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .course-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .list-limit-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 24px 0 0;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: var(--secondary);
+    }
+
+    .list-limit-note strong {
+      display: block;
+      color: var(--primary);
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .list-limit-note span {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .course-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: var(--white);
+      box-shadow: 0 10px 30px rgba(30, 116, 213, 0.07);
+      overflow: hidden;
+    }
+
+    .course-main {
+      padding: 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .course-main h3 {
+      color: var(--primary);
+      margin: 12px 0 12px;
+      font-size: 28px;
+      line-height: 1.16;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .institution {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--secondary);
+      color: var(--primary);
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .course-main p {
+      margin: 18px 0 0;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.58;
+    }
+
+    .course-meta {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      align-content: space-between;
+      background: linear-gradient(180deg, #FFFFFF, #F7FCFF);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .meta {
+      min-height: 86px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: var(--white);
+    }
+
+    .meta span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .meta strong {
+      display: block;
+      color: var(--primary);
+      margin-top: 6px;
+      font-size: 17px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .outcomes {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .outcomes strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .outcomes ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    body.compact-mode .course-list {
+      gap: 10px;
+    }
+
+    body.compact-mode .course-card {
+      grid-template-columns: 1fr minmax(520px, 0.95fr);
+      border-radius: 18px;
+      box-shadow: none;
+    }
+
+    body.compact-mode .course-main {
+      padding: 18px 20px;
+    }
+
+    body.compact-mode .tag-row {
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    body.compact-mode .tag {
+      padding: 4px 9px;
+      font-size: 11px;
+    }
+
+    body.compact-mode .course-main h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    body.compact-mode .institution {
+      font-size: 13px;
+    }
+
+    body.compact-mode .course-main p,
+    body.compact-mode .outcomes {
+      display: none;
+    }
+
+    body.compact-mode .course-meta {
+      padding: 14px 16px;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      background: #F7FCFF;
+    }
+
+    body.compact-mode .meta-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    body.compact-mode .meta {
+      min-height: 0;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    body.compact-mode .meta span {
+      font-size: 10px;
+    }
+
+    body.compact-mode .meta strong {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    body.compact-mode .card-actions {
+      flex-direction: column;
+      min-width: 110px;
+    }
+
+    body.compact-mode .card-actions .button {
+      min-height: 36px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .footer-band {
+      background: var(--primary);
+      color: var(--white);
+      padding: 44px 0;
+    }
+
+    .footer-inner {
+      width: min(1140px, calc(100% - 48px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .footer-inner p {
+      margin: 0;
+      max-width: 660px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .footer-inner .button {
+      border-color: var(--white);
+      color: var(--primary);
+      background: var(--white);
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        width: min(100% - 32px, 1140px);
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-wrap,
+      .intro,
+      .catalogue,
+      .footer-inner {
+        width: min(100% - 32px, 1140px);
+      }
+
+      .hero {
+        min-height: 520px;
+        padding: 48px;
+      }
+
+      .stats {
+        width: min(100% - 48px, 1080px);
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat:nth-child(2) {
+        border-right: 0;
+      }
+
+      .stat:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .intro,
+      .course-card {
+        grid-template-columns: 1fr;
+      }
+
+      body.compact-mode .course-card,
+      body.compact-mode .course-meta,
+      body.compact-mode .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body.compact-mode .card-actions {
+        flex-direction: row;
+      }
+
+      .course-main {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .toolbar {
+        top: 86px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .field.search,
+      .reset {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-wrap {
+        margin-top: 16px;
+      }
+
+      .hero {
+        border-radius: 26px;
+        min-height: 560px;
+        padding: 34px 24px;
+        align-items: end;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .stats {
+        margin-top: 18px;
+        grid-template-columns: 1fr;
+      }
+
+      .stat,
+      .stat:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: 0;
+      }
+
+      .intro,
+      .catalogue {
+        margin-top: 54px;
+      }
+
+      .intro h2,
+      .catalogue h2 {
+        font-size: 32px;
+      }
+
+      .catalogue-head,
+      .footer-inner,
+      .result-summary,
+      .list-limit-note {
+        display: grid;
+      }
+
+      .toolbar {
+        position: static;
+        grid-template-columns: 1fr;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#">
+        <img class="logo" src="ai4gov-logo.png" alt="AI4Gov-X">
+      </a>
+      <div class="nav-links">
+        <a href="#">What is AI4Gov-X?</a>
+        <a href="#">Consortium</a>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Contact</a>
+      </div>
+      <a class="nav-cta" href="#">Apply</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-wrap">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="eyebrow">Quality evaluated learning catalogue</span>
+          <h1>AI4Gov-X Extracurricular Activities</h1>
+          <p>Explore specialised courses in AI governance, data, ethics, cybersecurity, strategy, and digital transformation, delivered by the AI4Gov-X European consortium.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#catalogue">Browse courses</a>
+            <a class="button secondary" href="#">Open Badges</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Catalogue highlights">
+      <div class="stat">
+        <strong>50</strong>
+        <span>extracurricular learning opportunities</span>
+      </div>
+      <div class="stat">
+        <strong>17</strong>
+        <span>participating institutions</span>
+      </div>
+      <div class="stat">
+        <strong>10</strong>
+        <span>available language filters</span>
+      </div>
+      <div class="stat">
+        <strong>8</strong>
+        <span>topic areas across AI and governance</span>
+      </div>
+    </section>
+
+    <section class="intro" aria-label="Quality and recognition">
+      <div>
+        <h2>Quality-assured learning for AI in government</h2>
+        <p>All extracurricular activities presented here have successfully passed a dedicated quality evaluation in line with the ISO 21001 standard for educational organisations. By completing any of these courses and achieving a positive assessment, participants will earn an interoperable AI4Gov-X Open Badge.</p>
+      </div>
+      <aside class="quality-panel">
+        <div class="quality-item">
+          <div class="icon">Q</div>
+          <div>
+            <strong>ISO 21001-aligned quality evaluation</strong>
+            <span>Every listed activity has successfully passed a dedicated quality evaluation for educational organisations.</span>
+          </div>
+        </div>
+        <div class="quality-item">
+          <div class="icon">B</div>
+          <div>
+            <strong>Interoperable AI4Gov-X Open Badge</strong>
+            <span>Successful participants can formally recognise and share the skills and competencies they acquire.</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="catalogue" id="catalogue">
+      <div class="catalogue-head">
+        <div>
+          <h2>Find the right activity</h2>
+          <p>Search, filter, and compare AI4Gov-X extracurricular activities by topic, language, institution, format, and availability.</p>
+        </div>
+        <a class="button secondary" href="#">View all courses</a>
+      </div>
+
+      <div class="toolbar" aria-label="Course filters">
+        <div class="field search">Search courses, institutions, keywords</div>
+        <div class="field select">Topic <span>All</span></div>
+        <div class="field select">Language <span>All</span></div>
+        <div class="field select">Institution <span>All</span></div>
+        <button class="reset" type="button">Reset filters</button>
+      </div>
+
+      <div class="result-summary">
+        <div class="result-count">
+          50 courses available
+          <span>(50 match the current filters)</span>
+          <div class="mode-hint" id="modeHint">Card view shows descriptions and learning outcomes.</div>
+        </div>
+        <div class="view-controls" aria-label="Catalogue view">
+          <button class="view-button active" type="button" data-view="cards">Cards</button>
+          <button class="view-button" type="button" data-view="compact">Compact</button>
+        </div>
+      </div>
+
+      <div class="active-filters" aria-label="Active filters">
+        <span class="chip">All topics</span>
+        <span class="chip">All languages</span>
+        <span class="chip">Open badge eligible</span>
+      </div>
+
+      <div class="course-list">
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">AI Governance</span>
+              <span class="tag">Strategy</span>
+              <span class="tag">English</span>
+              <span class="tag">Spanish</span>
+            </div>
+            <h3>Strategic Foresight and Emerging Technologies: Power, Governance, and the Future Social Contract</h3>
+            <div class="institution">Center for the Governance of Change - IE University</div>
+            <p>The pace and scale of global change are accelerating. Rapid advances in artificial intelligence, the growing centrality of data, shifting geopolitical dynamics, and evolving societal expectations are fundamentally reshaping governance and the role of the state....</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>Approximately 13 hours</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>TBC</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>Online fee: 1.450 € (minimum of 20 participants to run the course). In-person fee: 1.950 € (minimum of 15 participants to run the course)</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Spanish</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Critically evaluate the implications of artificial intelligence, data-driven systems, and emerging technologies for governance and...</li>
+                <li>Analyze major technological and societal trends and apply foresight tools to anticipate future challenges and opportunities for or...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://www.ie.edu/cgc/trainingscgc/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/IE-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Strategy</span>
+              <span class="tag">Data</span>
+              <span class="tag">English</span>
+            </div>
+            <h3>Leading with Data-Driven Strategies &amp; Analytics</h3>
+            <div class="institution">ESSEC Business School</div>
+            <p>Over six weeks of immersive study on the power of data and analytics, this course enables participants to unlock the potential of data‑driven strategies and lead with greater precision and insight. Through hands‑on exploration,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>55</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>01/06/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>3.480 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Analyse the strategic role of data and analytics in a given organisational context, explaining how different types of analytics (d...</li>
+                <li>Evaluate data-driven opportunities and limitations within a given organisational context, using explicit criteria (e.g., data avai...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://www.essec.edu/en/program/leading-data-driven-strategies-analytics/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ESSEC-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">AI Governance</span>
+              <span class="tag">Strategy</span>
+              <span class="tag">English</span>
+            </div>
+            <h3>Executive Certificate in Digital Transformation</h3>
+            <div class="institution">ESSEC Business School</div>
+            <p>This Executive Certificate in Digital Transformation equips participants with the essential tools to become transformational leaders. Throughout the programme, learners explore how to define and implement new digital business models, foster organisational agility,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>200</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>TBC</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>11.880 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Analyse the key technological, economic, and organisational drivers of digital transformation, explaining their implications for s...</li>
+                <li>Explain the characteristics and implications of different digital business models, including platform-based and data-driven models...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://www.essec.edu/en/program/executive-certificate-in-digital-transformation/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ESSEC-2-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Design And Development</span>
+              <span class="tag">English</span>
+            </div>
+            <h3>Digital Product Development and Prototyping</h3>
+            <div class="institution">Estonian Business School</div>
+            <p>This intensive, project-based elective empowers students to act as technical product managers by transforming abstract business ideas into functional, high-fidelity digital prototypes. Unlike traditional no-code courses, it emphasizes the synergy between user empathy, visual design,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>32</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>15/09/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>1.080 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Validate User Problems: Conduct professional user interviews and synthesize findings into empathy maps and functional requirement...</li>
+                <li>Master Rapid Prototyping: Select and utilize appropriate tools (Paper → Visual → Digital) to build increasingly complex versions o...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://my.ebs.ee/et/subject/67f34e4f-0d24-4179-bb18-86051ce559e0/digitaalne-tootearendus-ja-prototuupimine" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="#" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">AI Governance</span>
+              <span class="tag">English</span>
+            </div>
+            <h3>AI and Law Summer School</h3>
+            <div class="institution">European University Institute (EUI), University of Bologna (UNIBO)</div>
+            <p>The course will cover topics including expert systems, argumentation, machine learning, legal forecasting, large language models, natural language processing for law, regulation of legal AI, and AI and law in practice....</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>30</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>06/07/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>In person fee: 650 €. On-line fee: 450 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Understand advanced AI concepts, including machine learning, knowledge-based systems, and text analytics, in the context of legal...</li>
+                <li>Explain the principles of modelling legal knowledge formally, and the foundations of argumentation frameworks.</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://www.eui.eu/apply?id=ai-and-law-school" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/UNIBO-2-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">AI Governance</span>
+              <span class="tag">English</span>
+            </div>
+            <h3>Summer School on Law and Logic</h3>
+            <div class="institution">European University Institute (EUI), University of Bologna (UNIBO)</div>
+            <p>"This course aims to provide thorough training in diverse logical methods to support legal analysis for students, lawyers, judges, and scholars. The course will cover the Logocratic method (a systematic approach for evaluating the strengths and weaknesses of arguments,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>30</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>13/07/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>In person fee: 650 €. On-line fee: 450 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Apply formal logical methods (including propositional and predicate logic.</li>
+                <li>Analyse and structure legal rules and legal arguments.</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://www.eui.eu/apply?id=summer-school-on-law-and-logic" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/UNIBO-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">AI Fundamentals</span>
+              <span class="tag">Data</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>MOOC Data Science - KDD process</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>Data Science, along with Artificial Intelligence and Machine Learning, appears today as the holy grail of information society evolution, but if not reaching so far, they are certainly fundamental pieces in the 4th industrial revolution....</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>Approximately 3 hours</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>N/A</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>N/A</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Have a complete understanding of the information discovery process to its full extent, and to be able to perform it over tabular d...</li>
+                <li>To be able to characterize the data to be explored, analyzing their weaknesses and opportunities, and to know the typical preparat...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://courses.elearning.tecnico.ulisboa.pt/learning/course/course-v1:MOOCs+datascience_kddX+S2_25-26/home" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-15-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">English</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>Operacional de Cibersegurança Defensiva - Blue Team (Defensive Cybersecurity Operations - Blue Team)</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>Cyber threats are growing in scale and sophistication, affecting the vast majority of organisations across both the public and private sectors. The ability to prevent, detect,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>52</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>07/09/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>2.250 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Configure and implement defensive systems — including intrusion detection and prevention systems, firewalls, and honeypots — and i...</li>
+                <li>Conduct malware analysis using passive and active techniques and Ghidra, and build a functional malware analysis laboratory.</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://tecnicomais.pt/cursos/ciberseguranca-operacional-blue-team/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-10-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Strategy</span>
+              <span class="tag">Data</span>
+              <span class="tag">English</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>Data Science e Análise Não-Supervisionada (Data Science and Unsupervised Analysis)</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>Data science derives its richness from the confluence of artificial intelligence, databases, and statistics — a combination that has produced a wide range of complementary methods for extracting value from data. While classification and supervised learning have driven much of the field's success,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>25</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>N/A</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>1.080 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Apply clustering algorithms — including hierarchical methods, DBSCAN, k-means, and EM — to partition multivariate datasets,...</li>
+                <li>Discover significant patterns in multivariate, transactional, and temporal data structures using association rules, sequential pat...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://tecnicomais.pt/cursos/dash-data-science-e-analise-nao-supervisionada/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-14-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Design And Development</span>
+              <span class="tag">English</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>AI-Driven Development: Metodologias e Práticas para Desenvolvimento Assistido por IA (AI-Driven Development: Methodologies and Practices for AI-Assisted Development)</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>Artificial intelligence is profoundly reshaping how software is conceived, specified, and built. The true differentiator in this new paradigm is no longer the speed of writing code, but the ability to structure problems clearly, define precise specifications,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>8</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>09/05/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>750 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Explain the structural shift from code-first to specification-first development and assess the real capabilities, limitations,...</li>
+                <li>Apply a structured specification-first methodology to translate vague requirements into clear, actionable technical specifications...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://tecnicomais.pt/cursos/ai-driven-development-metodologias-e-praticas-para-desenvolvimento-assistido-por-ia/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-13-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Strategy</span>
+              <span class="tag">English</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>Inteligência Artificial no Contexto do Lean Six Sigma (AI in the Context of Lean Six Sigma)</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>The rapid evolution of Artificial Intelligence — and in particular of generative models and Large Language Models — is transforming the way organisations analyse data, optimise processes, and make decisions....</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>30</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>22/05/2026</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>1.300 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Explain the core principles and methodology of Lean Six Sigma and evaluate how Generative AI and Large Language Models can augment...</li>
+                <li>Describe the fundamentals of Artificial Intelligence — including Generative AI, Machine Learning, and LLMs — and assess their pote...</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://tecnicomais.pt/cursos/lean-six-sigma-no-contexto-da-inteligencia-artificial/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-12-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-main">
+            <div class="tag-row">
+              <span class="tag">Strategy</span>
+              <span class="tag">Data</span>
+              <span class="tag">English</span>
+              <span class="tag">Portuguese</span>
+            </div>
+            <h3>Business Intelligence e Analítica Avançada de Dados com Power BI (Business Intelligence and Advanced Data Analysis with Power BI)</h3>
+            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
+            <p>"The explosion in data volume and the growing diversity of information sources are transforming the way organisations make decisions. With the advancement of artificial intelligence, big data, and the integration of these technologies into Business Intelligence platforms,...</p>
+          </div>
+          <div class="course-meta">
+            <div class="meta-grid">
+              <div class="meta">
+                <span>Teaching hours</span>
+                <strong>28</strong>
+              </div>
+              <div class="meta">
+                <span>Start date</span>
+                <strong>N/A</strong>
+              </div>
+              <div class="meta">
+                <span>Price</span>
+                <strong>1.200 €</strong>
+              </div>
+              <div class="meta">
+                <span>Language</span>
+                <strong>English, Portuguese</strong>
+              </div>
+            </div>
+            <div class="outcomes">
+              <strong>What learners gain</strong>
+              <ul>
+                <li>Use Power BI to transform raw data into strategic information.</li>
+                <li>Automate data import, transformation, and analysis processes to improve operational efficiency.</li>
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a class="button primary" href="https://tecnicomais.pt/cursos/business-intelligence-e-analitica-avancada-de-dados/" target="_blank" rel="noreferrer">Register</a>
+              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-11-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="list-limit-note">
+        <div>
+          <strong>Showing 12 of 50 matching courses</strong>
+          <span>Refine the filters or load more results to continue exploring available extracurricular activities.</span>
+        </div>
+        <a class="button primary" href="#">Load 12 more</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-band">
+    <div class="footer-inner">
+      <p>Successful participants receive an interoperable AI4Gov-X Open Badge to recognise and share the skills and competencies acquired.</p>
+      <a class="button" href="#">Back to top</a>
+    </div>
+  </footer>
+  <script>
+    const viewButtons = document.querySelectorAll("[data-view]");
+    const modeHint = document.getElementById("modeHint");
+
+    viewButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const compact = button.dataset.view === "compact";
+        document.body.classList.toggle("compact-mode", compact);
+        viewButtons.forEach((item) => item.classList.toggle("active", item === button));
+        modeHint.textContent = compact
+          ? "Compact view is optimised for scanning many courses quickly."
+          : "Card view shows descriptions and learning outcomes.";
+      });
+    });
+  </script>
+</body>
+</html>
