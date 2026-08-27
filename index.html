@@ -3,1495 +3,801 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A status-aware catalogue prototype for AI4Gov-X extracurricular activities.">
   <title>AI4Gov-X Extracurricular Activities</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1E74D5;
-      --secondary: #E5F8FF;
-      --text: #3F3F3F;
-      --accent: #6EC1E4;
-      --link: #39C9FF;
-      --white: #FFFFFF;
-      --line: #D7ECFA;
-      --muted: #6A7A89;
-      --shadow: 0 20px 50px rgba(30, 116, 213, 0.13);
-      --radius: 24px;
+      --blue-900: #123f76;
+      --blue-800: #18599f;
+      --blue-700: #1e74d5;
+      --blue-100: #dcedfb;
+      --blue-050: #f3f9fe;
+      --ink: #183044;
+      --muted: #647689;
+      --line: #d9e6f0;
+      --white: #fff;
+      --green: #18794e;
+      --green-bg: #e8f7ef;
+      --orange: #9a4f00;
+      --orange-bg: #fff3dc;
+      --red: #a53a3a;
+      --red-bg: #fff0f0;
+      --slate: #5f6b76;
+      --slate-bg: #eef2f5;
+      --shadow: 0 18px 46px rgba(18, 63, 118, .12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--white);
-      color: var(--text);
-      font-family: "Saira", Arial, sans-serif;
-      font-weight: 500;
+      background: #f7fbfe;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid #8bcdf4; outline-offset: 3px; }
 
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(255, 255, 255, 0.94);
-      border-bottom: 1px solid rgba(30, 116, 213, 0.12);
-      backdrop-filter: blur(12px);
+      z-index: 30;
+      border-bottom: 1px solid rgba(18, 63, 118, .1);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(14px);
     }
-
     .nav {
-      width: min(1140px, calc(100% - 48px));
-      min-height: 86px;
+      width: min(1180px, calc(100% - 40px));
+      min-height: 78px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 28px;
     }
-
-    .logo {
-      width: 150px;
-      height: auto;
-      display: block;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--primary);
-      font-size: 15px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .nav-cta,
-    .button {
-      border: 1px solid var(--primary);
+    .logo { width: 152px; display: block; }
+    .nav-links { display: flex; gap: 26px; align-items: center; color: var(--blue-800); font-size: 14px; font-weight: 700; }
+    .nav-links a { text-decoration: none; }
+    .nav-cta, .button {
+      min-height: 42px;
+      border: 1px solid var(--blue-700);
       border-radius: 999px;
-      color: var(--primary);
+      padding: 10px 17px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-family: "Roboto", Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      min-height: 42px;
-      padding: 10px 18px;
-      transition: 160ms ease;
-    }
-
-    .nav-cta,
-    .button.primary {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    .button.secondary {
       background: var(--white);
+      color: var(--blue-800);
+      font-weight: 750;
+      font-size: 14px;
+      line-height: 1.15;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
     }
+    .button:hover, .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(30, 116, 213, .16); }
+    .button.primary, .nav-cta { background: var(--blue-700); color: var(--white); }
+    .button.subtle { border-color: var(--line); background: var(--blue-050); }
+    .button[aria-disabled="true"] { background: var(--slate-bg); border-color: #d7dde2; color: var(--slate); cursor: not-allowed; box-shadow: none; transform: none; }
 
-    .button:hover,
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(30, 116, 213, 0.18);
-    }
-
-    main {
-      overflow: hidden;
-    }
-
-    .hero-wrap {
-      width: min(1220px, calc(100% - 48px));
-      margin: 30px auto 0;
-    }
-
+    .hero-shell { width: min(1240px, calc(100% - 40px)); margin: 24px auto 0; }
     .hero {
-      min-height: 560px;
-      border-radius: 40px;
-      background:
-        linear-gradient(90deg, rgba(30, 116, 213, 0.92), rgba(30, 116, 213, 0.68) 45%, rgba(30, 116, 213, 0.42)),
-        url("ai4gov-hero.png") center / cover no-repeat;
-      color: var(--white);
+      min-height: 430px;
+      padding: clamp(40px, 6vw, 74px);
+      border-radius: 38px;
       display: grid;
       align-items: center;
-      padding: 72px;
-      position: relative;
+      color: var(--white);
+      background:
+        linear-gradient(92deg, rgba(18, 63, 118, .95) 0%, rgba(30, 116, 213, .84) 47%, rgba(30, 116, 213, .30) 100%),
+        url("ai4gov-hero.png") center / cover no-repeat;
+      box-shadow: var(--shadow);
     }
-
-    .hero-content {
-      max-width: 740px;
-    }
-
+    .hero-content { max-width: 760px; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      min-height: 34px;
-      padding: 6px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.55);
+      gap: 9px;
+      padding: 7px 13px;
+      border: 1px solid rgba(255,255,255,.45);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.13);
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0;
+      background: rgba(255,255,255,.13);
+      font-size: 13px;
+      font-weight: 750;
     }
-
-    h1 {
-      margin: 26px 0 18px;
-      color: var(--white);
-      font-size: clamp(44px, 5vw, 70px);
-      line-height: 1.02;
-      font-weight: 700;
-      letter-spacing: 0;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 700px;
-      font-size: 20px;
-      line-height: 1.55;
-      font-weight: 500;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 34px;
-    }
-
-    .hero-actions .button.secondary {
-      background: rgba(255, 255, 255, 0.96);
-    }
-
-    .hero-actions .button.primary {
-      border-color: var(--white);
-      background: var(--white);
-      color: var(--primary);
-    }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #77e2b4; box-shadow: 0 0 0 4px rgba(119,226,180,.18); }
+    h1 { margin: 22px 0 16px; max-width: 700px; font-size: clamp(42px, 6vw, 67px); line-height: 1.03; letter-spacing: -.035em; }
+    .hero p { max-width: 690px; margin: 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: rgba(255,255,255,.94); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-actions .button { border-color: var(--white); }
+    .hero-actions .button.primary { background: var(--white); color: var(--blue-800); }
+    .hero-actions .button.ghost { color: var(--white); background: rgba(255,255,255,.1); }
 
     .stats {
-      width: min(1080px, calc(100% - 72px));
-      margin: -54px auto 0;
+      width: min(1080px, calc(100% - 64px));
+      margin: -38px auto 0;
       position: relative;
       z-index: 2;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 25px;
+      border-radius: 22px;
+      background: var(--white);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
+    .stat { padding: 22px 24px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; color: var(--blue-700); font-size: 29px; line-height: 1.1; }
+    .stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
 
-    .stat {
-      padding: 28px 24px;
-      border-right: 1px solid var(--line);
-    }
-
-    .stat:last-child {
-      border-right: 0;
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--primary);
-      font-size: 34px;
-      line-height: 1;
-      font-weight: 700;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .intro {
-      width: min(1140px, calc(100% - 48px));
-      margin: 74px auto 0;
+    .trust-strip {
+      width: min(1180px, calc(100% - 40px));
+      margin: 66px auto 0;
+      padding: 22px 24px;
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius-md);
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 40px;
-      align-items: stretch;
-    }
-
-    .intro h2,
-    .catalogue h2 {
-      color: var(--primary);
-      font-size: 42px;
-      line-height: 1.08;
-      margin: 0 0 18px;
-      font-weight: 700;
-      letter-spacing: 0;
-    }
-
-    .intro p {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.65;
-    }
-
-    .quality-panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--secondary);
-      padding: 28px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .quality-item {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--white);
-      color: var(--primary);
-      display: grid;
-      place-items: center;
-      font-family: "Roboto", Arial, sans-serif;
-      font-weight: 700;
-      box-shadow: inset 0 0 0 1px rgba(30, 116, 213, 0.14);
-    }
-
-    .quality-item strong {
-      color: var(--primary);
-      display: block;
-      font-size: 17px;
-      margin-bottom: 2px;
-    }
-
-    .quality-item span {
-      color: var(--text);
-      display: block;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .catalogue {
-      width: min(1140px, calc(100% - 48px));
-      margin: 74px auto 96px;
-    }
-
-    .catalogue-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 30px;
-      margin-bottom: 26px;
-    }
-
-    .catalogue-head p {
-      max-width: 620px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-    .toolbar {
-      position: sticky;
-      top: 87px;
-      z-index: 10;
-      display: grid;
-      grid-template-columns: minmax(240px, 1fr) repeat(3, 180px) auto;
-      gap: 12px;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      padding: 16px;
-      margin-bottom: 18px;
-      border: 1px solid var(--line);
-      border-radius: 25px;
-      background: rgba(255, 255, 255, 0.94);
-      box-shadow: 0 14px 38px rgba(30, 116, 213, 0.10);
-      backdrop-filter: blur(12px);
+      gap: 18px;
+      background: #eef8ff;
     }
+    .trust-icon { width: 43px; height: 43px; border-radius: 14px; display: grid; place-items: center; background: var(--white); color: var(--blue-700); font-size: 20px; font-weight: 800; }
+    .trust-strip strong { display: block; color: var(--blue-900); margin-bottom: 2px; }
+    .trust-strip p { margin: 0; color: #49657c; font-size: 14px; }
+    .reviewed { white-space: nowrap; color: var(--blue-800); font-size: 13px; font-weight: 750; }
 
-    .field {
-      min-height: 48px;
-      border: 1px solid var(--primary);
-      border-radius: 999px;
-      color: var(--primary);
-      background: var(--white);
-      display: flex;
+    .catalogue { width: min(1180px, calc(100% - 40px)); margin: 70px auto 90px; }
+    .catalogue-heading { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 28px; margin-bottom: 24px; }
+    .catalogue-heading h2 { margin: 0 0 8px; color: var(--blue-900); font-size: clamp(32px, 4vw, 44px); line-height: 1.08; letter-spacing: -.025em; }
+    .catalogue-heading p { margin: 0; max-width: 690px; color: var(--muted); font-size: 16px; }
+    .legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+    .status-pill, .tag {
+      display: inline-flex;
       align-items: center;
-      padding: 0 18px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .field.search {
-      justify-content: flex-start;
-      gap: 10px;
-      color: var(--primary);
-    }
-
-    .field.select {
-      justify-content: space-between;
-    }
-
-    .reset {
-      min-height: 48px;
-      padding: 0 18px;
-      border: 1px solid var(--line);
+      gap: 6px;
+      min-height: 27px;
+      padding: 4px 9px;
       border-radius: 999px;
-      background: var(--secondary);
-      color: var(--primary);
-      font-family: "Roboto", Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .015em;
       white-space: nowrap;
     }
+    .status-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status-open, .status-upcoming { color: var(--green); background: var(--green-bg); }
+    .status-closed { color: var(--orange); background: var(--orange-bg); }
+    .status-pending { color: var(--red); background: var(--red-bg); }
+    .status-completed { color: var(--slate); background: var(--slate-bg); }
+    .tag { color: var(--blue-800); background: var(--blue-050); border: 1px solid var(--blue-100); }
+    .tag.recurrent { color: #654aa5; background: #f3edff; border-color: #dfd1ff; }
 
-    .result-summary {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      margin: 0 0 16px;
-      padding: 0 4px;
-    }
-
-    .result-count {
-      color: var(--primary);
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.25;
-    }
-
-    .result-count span {
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .view-controls {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px;
+    .filters {
+      position: sticky;
+      top: 90px;
+      z-index: 20;
+      padding: 16px;
       border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--secondary);
-    }
-
-    .view-button {
-      min-height: 34px;
-      padding: 7px 12px;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--primary);
-      font-family: "Roboto", Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .view-button.active {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    .mode-hint {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    .active-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 0 0 24px;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 32px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: var(--secondary);
-      color: var(--primary);
-      border: 1px solid rgba(30, 116, 213, 0.18);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .course-list {
+      border-radius: 22px;
       display: grid;
-      gap: 16px;
+      grid-template-columns: minmax(260px, 1.5fr) repeat(3, minmax(150px, .75fr)) auto;
+      gap: 11px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 12px 36px rgba(18, 63, 118, .10);
+      backdrop-filter: blur(12px);
     }
-
-    .list-limit-note {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin: 24px 0 0;
-      padding: 22px 24px;
+    .control { position: relative; }
+    .control label { position: absolute; left: 15px; top: 6px; z-index: 1; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; pointer-events: none; }
+    .control input, .control select {
+      width: 100%;
+      height: 54px;
+      padding: 21px 14px 6px;
       border: 1px solid var(--line);
-      border-radius: 25px;
-      background: var(--secondary);
-    }
-
-    .list-limit-note strong {
-      display: block;
-      color: var(--primary);
-      font-size: 18px;
-      margin-bottom: 2px;
-    }
-
-    .list-limit-note span {
-      color: var(--text);
+      border-radius: 15px;
+      background: var(--white);
+      color: var(--ink);
       font-size: 14px;
-      line-height: 1.45;
+      font-weight: 650;
     }
+    .control input:hover, .control select:hover { border-color: #9ec9e7; }
+    .reset { align-self: stretch; border-color: var(--line); background: var(--blue-050); }
 
+    .result-bar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 20px 2px 14px; }
+    .result-count { color: var(--blue-900); font-size: 19px; font-weight: 800; }
+    .result-count span { color: var(--muted); font-size: 13px; font-weight: 650; }
+    .result-options { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 13px; font-weight: 650; }
+    .result-options label { display: inline-flex; align-items: center; gap: 8px; }
+    .result-options select { border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--ink); padding: 6px 9px; font-weight: 700; }
+
+    .course-list { display: grid; gap: 14px; }
     .course-card {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 0;
       border: 1px solid var(--line);
-      border-radius: 25px;
+      border-radius: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(390px, .75fr);
       background: var(--white);
-      box-shadow: 0 10px 30px rgba(30, 116, 213, 0.07);
       overflow: hidden;
+      box-shadow: 0 8px 26px rgba(18, 63, 118, .055);
     }
+    .course-card.is-completed { background: #fbfcfd; box-shadow: none; }
+    .course-body { padding: 23px 25px; border-right: 1px solid var(--line); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .course-body h3 { margin: 13px 0 6px; color: var(--blue-900); font-size: clamp(21px, 2.4vw, 27px); line-height: 1.18; letter-spacing: -.018em; }
+    .provider { color: var(--muted); font-size: 14px; font-weight: 650; }
+    .course-summary { margin: 13px 0 0; color: #40576b; font-size: 14px; line-height: 1.55; }
+    .verification { margin-top: 14px; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+    .verification::before { content: "✓"; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: var(--green-bg); color: var(--green); font-weight: 900; }
 
-    .course-main {
-      padding: 28px;
-      border-right: 1px solid var(--line);
-    }
+    .course-side { padding: 20px; display: grid; gap: 15px; align-content: space-between; background: linear-gradient(180deg, #fff, #f5faff); }
+    .meta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .meta { min-height: 72px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.92); }
+    .meta span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .055em; text-transform: uppercase; }
+    .meta strong { display: block; margin-top: 4px; color: var(--blue-900); font-size: 14px; line-height: 1.3; }
+    .card-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .card-actions .button { flex: 1 1 auto; }
+    .details-button { border: 0; background: transparent; color: var(--blue-800); font-weight: 800; cursor: pointer; padding: 7px 0; }
+    .details { grid-column: 1 / -1; display: none; border-top: 1px solid var(--line); background: #fbfdff; }
+    .details.open { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; padding: 22px 25px 25px; }
+    .details h4 { margin: 0 0 8px; color: var(--blue-900); font-size: 14px; }
+    .details ul { margin: 0; padding-left: 18px; color: #40576b; font-size: 13px; line-height: 1.55; }
+    .edition-list { list-style: none; padding: 0 !important; display: grid; gap: 7px; }
+    .edition-list li { padding: 8px 10px; border-radius: 10px; background: var(--white); border: 1px solid var(--line); }
 
-    .course-main h3 {
-      color: var(--primary);
-      margin: 12px 0 12px;
-      font-size: 28px;
-      line-height: 1.16;
-      font-weight: 700;
-      letter-spacing: 0;
-    }
+    .empty-state { padding: 56px 24px; border: 1px dashed #b8cddd; border-radius: 22px; text-align: center; background: var(--white); }
+    .empty-state strong { display: block; color: var(--blue-900); font-size: 21px; }
+    .empty-state span { color: var(--muted); }
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; }
+    .page-label { min-width: 120px; text-align: center; color: var(--muted); font-size: 13px; font-weight: 700; }
 
-    .institution {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      border-radius: 999px;
-      background: var(--secondary);
-      color: var(--primary);
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .course-main p {
-      margin: 18px 0 0;
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1.58;
-    }
-
-    .course-meta {
-      padding: 28px;
+    .principles {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 86px;
+      padding: 34px;
+      border-radius: var(--radius-lg);
       display: grid;
-      gap: 18px;
-      align-content: space-between;
-      background: linear-gradient(180deg, #FFFFFF, #F7FCFF);
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .meta {
-      min-height: 86px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 14px;
-      background: var(--white);
-    }
-
-    .meta span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .meta strong {
-      display: block;
-      color: var(--primary);
-      margin-top: 6px;
-      font-size: 17px;
-      line-height: 1.2;
-      font-weight: 700;
-    }
-
-    .outcomes {
-      border-top: 1px solid var(--line);
-      padding-top: 16px;
-    }
-
-    .outcomes strong {
-      color: var(--primary);
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-    }
-
-    .outcomes ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .card-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    body.compact-mode .course-list {
-      gap: 10px;
-    }
-
-    body.compact-mode .course-card {
-      grid-template-columns: 1fr minmax(520px, 0.95fr);
-      border-radius: 18px;
-      box-shadow: none;
-    }
-
-    body.compact-mode .course-main {
-      padding: 18px 20px;
-    }
-
-    body.compact-mode .tag-row {
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    body.compact-mode .tag {
-      padding: 4px 9px;
-      font-size: 11px;
-    }
-
-    body.compact-mode .course-main h3 {
-      margin: 0 0 8px;
-      font-size: 19px;
-      line-height: 1.25;
-    }
-
-    body.compact-mode .institution {
-      font-size: 13px;
-    }
-
-    body.compact-mode .course-main p,
-    body.compact-mode .outcomes {
-      display: none;
-    }
-
-    body.compact-mode .course-meta {
-      padding: 14px 16px;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      background: #F7FCFF;
-    }
-
-    body.compact-mode .meta-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    body.compact-mode .meta {
-      min-height: 0;
-      border-radius: 12px;
-      padding: 10px;
-    }
-
-    body.compact-mode .meta span {
-      font-size: 10px;
-    }
-
-    body.compact-mode .meta strong {
-      font-size: 13px;
-      line-height: 1.25;
-    }
-
-    body.compact-mode .card-actions {
-      flex-direction: column;
-      min-width: 110px;
-    }
-
-    body.compact-mode .card-actions .button {
-      min-height: 36px;
-      padding: 8px 12px;
-      font-size: 12px;
-    }
-
-    .footer-band {
-      background: var(--primary);
+      grid-template-columns: .9fr 1.1fr;
+      gap: 36px;
       color: var(--white);
-      padding: 44px 0;
+      background: var(--blue-900);
     }
+    .principles h2 { margin: 0; font-size: 32px; line-height: 1.12; }
+    .principles p { margin: 12px 0 0; color: #d9eaff; }
+    .principle-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .principle { padding: 16px; border-radius: 15px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.16); }
+    .principle strong { display: block; margin-bottom: 3px; }
+    .principle span { display: block; color: #d9eaff; font-size: 13px; }
 
-    .footer-inner {
-      width: min(1140px, calc(100% - 48px));
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
+    footer { background: #0d315c; color: var(--white); }
+    .footer-inner { width: min(1180px, calc(100% - 40px)); min-height: 110px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .footer-inner p { margin: 0; max-width: 720px; color: #d9eaff; font-size: 14px; }
+
+    @media (max-width: 1020px) {
+      .nav-links { display: none; }
+      .filters { position: static; grid-template-columns: 1fr 1fr; }
+      .filters .control:first-child { grid-column: 1 / -1; }
+      .course-card { grid-template-columns: 1fr; }
+      .course-body { border-right: 0; border-bottom: 1px solid var(--line); }
+      .principles { grid-template-columns: 1fr; }
     }
-
-    .footer-inner p {
-      margin: 0;
-      max-width: 660px;
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-    .footer-inner .button {
-      border-color: var(--white);
-      color: var(--primary);
-      background: var(--white);
-      flex: 0 0 auto;
-    }
-
-    @media (max-width: 980px) {
-      .nav {
-        width: min(100% - 32px, 1140px);
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero-wrap,
-      .intro,
-      .catalogue,
-      .footer-inner {
-        width: min(100% - 32px, 1140px);
-      }
-
-      .hero {
-        min-height: 520px;
-        padding: 48px;
-      }
-
-      .stats {
-        width: min(100% - 48px, 1080px);
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stat:nth-child(2) {
-        border-right: 0;
-      }
-
-      .stat:nth-child(-n + 2) {
-        border-bottom: 1px solid var(--line);
-      }
-
-      .intro,
-      .course-card {
-        grid-template-columns: 1fr;
-      }
-
-      body.compact-mode .course-card,
-      body.compact-mode .course-meta,
-      body.compact-mode .meta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      body.compact-mode .card-actions {
-        flex-direction: row;
-      }
-
-      .course-main {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .toolbar {
-        top: 86px;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .field.search,
-      .reset {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero-wrap {
-        margin-top: 16px;
-      }
-
-      .hero {
-        border-radius: 26px;
-        min-height: 560px;
-        padding: 34px 24px;
-        align-items: end;
-      }
-
-      h1 {
-        font-size: 42px;
-      }
-
-      .hero p {
-        font-size: 17px;
-      }
-
-      .stats {
-        margin-top: 18px;
-        grid-template-columns: 1fr;
-      }
-
-      .stat,
-      .stat:nth-child(2) {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .stat:last-child {
-        border-bottom: 0;
-      }
-
-      .intro,
-      .catalogue {
-        margin-top: 54px;
-      }
-
-      .intro h2,
-      .catalogue h2 {
-        font-size: 32px;
-      }
-
-      .catalogue-head,
-      .footer-inner,
-      .result-summary,
-      .list-limit-note {
-        display: grid;
-      }
-
-      .toolbar {
-        position: static;
-        grid-template-columns: 1fr;
-      }
-
-      .meta-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 720px) {
+      .hero-shell, .catalogue, .trust-strip, .principles, .footer-inner { width: min(100% - 24px, 1180px); }
+      .hero { min-height: 510px; padding: 34px 24px; border-radius: 26px; align-items: end; }
+      .stats { width: min(100% - 36px, 1080px); grid-template-columns: 1fr 1fr; margin-top: 14px; }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .trust-strip { grid-template-columns: auto 1fr; margin-top: 44px; }
+      .reviewed { grid-column: 2; white-space: normal; }
+      .catalogue-heading { grid-template-columns: 1fr; }
+      .legend { justify-content: flex-start; }
+      .filters { grid-template-columns: 1fr; }
+      .filters .control:first-child { grid-column: auto; }
+      .result-bar, .footer-inner { align-items: flex-start; flex-direction: column; }
+      .result-options { flex-wrap: wrap; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .details.open { grid-template-columns: 1fr; }
+      .principle-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
     <nav class="nav" aria-label="Main navigation">
-      <a href="#">
-        <img class="logo" src="ai4gov-logo.png" alt="AI4Gov-X">
-      </a>
+      <a href="#top" aria-label="AI4Gov-X home"><img class="logo" src="ai4gov-logo.png" alt="AI4Gov-X"></a>
       <div class="nav-links">
-        <a href="#">What is AI4Gov-X?</a>
-        <a href="#">Consortium</a>
-        <a href="#">News</a>
-        <a href="#">Events</a>
-        <a href="#">Contact</a>
+        <a href="#about">How it works</a>
+        <a href="#catalogue">Activities</a>
+        <a href="#quality">Information policy</a>
       </div>
-      <a class="nav-cta" href="#">Apply</a>
+      <a class="nav-cta" href="#catalogue">Browse activities</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero-wrap">
+  <main id="top">
+    <section class="hero-shell" aria-labelledby="page-title">
       <div class="hero">
         <div class="hero-content">
-          <span class="eyebrow">Quality evaluated learning catalogue</span>
-          <h1>AI4Gov-X Extracurricular Activities</h1>
-          <p>Explore specialised courses in AI governance, data, ethics, cybersecurity, strategy, and digital transformation, delivered by the AI4Gov-X European consortium.</p>
+          <span class="eyebrow">Status-aware learning catalogue</span>
+          <h1 id="page-title">Find the right AI4Gov-X activity—and the right edition.</h1>
+          <p>Explore specialised learning in AI governance, data, ethics, cybersecurity and digital transformation. Current, closed and recurrent editions are clearly distinguished.</p>
           <div class="hero-actions">
-            <a class="button primary" href="#catalogue">Browse courses</a>
-            <a class="button secondary" href="#">Open Badges</a>
+            <a class="button primary" href="#catalogue">Explore available activities</a>
+            <a class="button ghost" href="#quality">How information is maintained</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="stats" aria-label="Catalogue highlights">
-      <div class="stat">
-        <strong>50</strong>
-        <span>extracurricular learning opportunities</span>
-      </div>
-      <div class="stat">
-        <strong>17</strong>
-        <span>participating institutions</span>
-      </div>
-      <div class="stat">
-        <strong>10</strong>
-        <span>available language filters</span>
-      </div>
-      <div class="stat">
-        <strong>8</strong>
-        <span>topic areas across AI and governance</span>
-      </div>
+    <section class="stats" aria-label="Catalogue summary">
+      <div class="stat"><strong>50</strong><span>activities in the full catalogue</span></div>
+      <div class="stat"><strong>17</strong><span>European learning providers</span></div>
+      <div class="stat"><strong>10</strong><span>focus areas</span></div>
+      <div class="stat"><strong>8</strong><span>countries represented</span></div>
     </section>
 
-    <section class="intro" aria-label="Quality and recognition">
+    <section class="trust-strip" id="about" aria-label="Information quality statement">
+      <div class="trust-icon" aria-hidden="true">✓</div>
       <div>
-        <h2>Quality-assured learning for AI in government</h2>
-        <p>All extracurricular activities presented here have successfully passed a dedicated quality evaluation in line with the ISO 21001 standard for educational organisations. By completing any of these courses and achieving a positive assessment, participants will earn an interoperable AI4Gov-X Open Badge.</p>
+        <strong>Clear edition and registration status</strong>
+        <p>Provider links are separated from syllabus files. Closed editions stay visible for transparency, while recurrent activities keep their edition history.</p>
       </div>
-      <aside class="quality-panel">
-        <div class="quality-item">
-          <div class="icon">Q</div>
-          <div>
-            <strong>ISO 21001-aligned quality evaluation</strong>
-            <span>Every listed activity has successfully passed a dedicated quality evaluation for educational organisations.</span>
-          </div>
-        </div>
-        <div class="quality-item">
-          <div class="icon">B</div>
-          <div>
-            <strong>Interoperable AI4Gov-X Open Badge</strong>
-            <span>Successful participants can formally recognise and share the skills and competencies they acquire.</span>
-          </div>
-        </div>
-      </aside>
+      <div class="reviewed">Data reviewed 25 August 2026</div>
     </section>
 
-    <section class="catalogue" id="catalogue">
-      <div class="catalogue-head">
+    <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
+      <div class="catalogue-heading">
         <div>
-          <h2>Find the right activity</h2>
-          <p>Search, filter, and compare AI4Gov-X extracurricular activities by topic, language, institution, format, and availability.</p>
+          <h2 id="catalogue-title">Extracurricular activities</h2>
+          <p>This prototype contains 12 representative activities. Available and upcoming editions appear first; completed editions are archived by default.</p>
         </div>
-        <a class="button secondary" href="#">View all courses</a>
-      </div>
-
-      <div class="toolbar" aria-label="Course filters">
-        <div class="field search">Search courses, institutions, keywords</div>
-        <div class="field select">Topic <span>All</span></div>
-        <div class="field select">Language <span>All</span></div>
-        <div class="field select">Institution <span>All</span></div>
-        <button class="reset" type="button">Reset filters</button>
-      </div>
-
-      <div class="result-summary">
-        <div class="result-count">
-          50 courses available
-          <span>(50 match the current filters)</span>
-          <div class="mode-hint" id="modeHint">Card view shows descriptions and learning outcomes.</div>
-        </div>
-        <div class="view-controls" aria-label="Catalogue view">
-          <button class="view-button active" type="button" data-view="cards">Cards</button>
-          <button class="view-button" type="button" data-view="compact">Compact</button>
+        <div class="legend" aria-label="Status legend">
+          <span class="status-pill status-open">Open / upcoming</span>
+          <span class="status-pill status-closed">Registration closed</span>
+          <span class="status-pill status-pending">Confirmation needed</span>
+          <span class="status-pill status-completed">Completed</span>
         </div>
       </div>
 
-      <div class="active-filters" aria-label="Active filters">
-        <span class="chip">All topics</span>
-        <span class="chip">All languages</span>
-        <span class="chip">Open badge eligible</span>
-      </div>
-
-      <div class="course-list">
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">AI Governance</span>
-              <span class="tag">Strategy</span>
-              <span class="tag">English</span>
-              <span class="tag">Spanish</span>
-            </div>
-            <h3>Strategic Foresight and Emerging Technologies: Power, Governance, and the Future Social Contract</h3>
-            <div class="institution">Center for the Governance of Change - IE University</div>
-            <p>The pace and scale of global change are accelerating. Rapid advances in artificial intelligence, the growing centrality of data, shifting geopolitical dynamics, and evolving societal expectations are fundamentally reshaping governance and the role of the state....</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>Approximately 13 hours</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>TBC</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>Online fee: 1.450 € (minimum of 20 participants to run the course). In-person fee: 1.950 € (minimum of 15 participants to run the course)</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Spanish</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Critically evaluate the implications of artificial intelligence, data-driven systems, and emerging technologies for governance and...</li>
-                <li>Analyze major technological and societal trends and apply foresight tools to anticipate future challenges and opportunities for or...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://www.ie.edu/cgc/trainingscgc/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/IE-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Strategy</span>
-              <span class="tag">Data</span>
-              <span class="tag">English</span>
-            </div>
-            <h3>Leading with Data-Driven Strategies &amp; Analytics</h3>
-            <div class="institution">ESSEC Business School</div>
-            <p>Over six weeks of immersive study on the power of data and analytics, this course enables participants to unlock the potential of data‑driven strategies and lead with greater precision and insight. Through hands‑on exploration,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>55</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>01/06/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>3.480 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Analyse the strategic role of data and analytics in a given organisational context, explaining how different types of analytics (d...</li>
-                <li>Evaluate data-driven opportunities and limitations within a given organisational context, using explicit criteria (e.g., data avai...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://www.essec.edu/en/program/leading-data-driven-strategies-analytics/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ESSEC-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">AI Governance</span>
-              <span class="tag">Strategy</span>
-              <span class="tag">English</span>
-            </div>
-            <h3>Executive Certificate in Digital Transformation</h3>
-            <div class="institution">ESSEC Business School</div>
-            <p>This Executive Certificate in Digital Transformation equips participants with the essential tools to become transformational leaders. Throughout the programme, learners explore how to define and implement new digital business models, foster organisational agility,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>200</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>TBC</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>11.880 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Analyse the key technological, economic, and organisational drivers of digital transformation, explaining their implications for s...</li>
-                <li>Explain the characteristics and implications of different digital business models, including platform-based and data-driven models...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://www.essec.edu/en/program/executive-certificate-in-digital-transformation/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ESSEC-2-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Design And Development</span>
-              <span class="tag">English</span>
-            </div>
-            <h3>Digital Product Development and Prototyping</h3>
-            <div class="institution">Estonian Business School</div>
-            <p>This intensive, project-based elective empowers students to act as technical product managers by transforming abstract business ideas into functional, high-fidelity digital prototypes. Unlike traditional no-code courses, it emphasizes the synergy between user empathy, visual design,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>32</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>15/09/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>1.080 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Validate User Problems: Conduct professional user interviews and synthesize findings into empathy maps and functional requirement...</li>
-                <li>Master Rapid Prototyping: Select and utilize appropriate tools (Paper → Visual → Digital) to build increasingly complex versions o...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://my.ebs.ee/et/subject/67f34e4f-0d24-4179-bb18-86051ce559e0/digitaalne-tootearendus-ja-prototuupimine" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="#" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">AI Governance</span>
-              <span class="tag">English</span>
-            </div>
-            <h3>AI and Law Summer School</h3>
-            <div class="institution">European University Institute (EUI), University of Bologna (UNIBO)</div>
-            <p>The course will cover topics including expert systems, argumentation, machine learning, legal forecasting, large language models, natural language processing for law, regulation of legal AI, and AI and law in practice....</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>30</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>06/07/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>In person fee: 650 €. On-line fee: 450 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Understand advanced AI concepts, including machine learning, knowledge-based systems, and text analytics, in the context of legal...</li>
-                <li>Explain the principles of modelling legal knowledge formally, and the foundations of argumentation frameworks.</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://www.eui.eu/apply?id=ai-and-law-school" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/UNIBO-2-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">AI Governance</span>
-              <span class="tag">English</span>
-            </div>
-            <h3>Summer School on Law and Logic</h3>
-            <div class="institution">European University Institute (EUI), University of Bologna (UNIBO)</div>
-            <p>"This course aims to provide thorough training in diverse logical methods to support legal analysis for students, lawyers, judges, and scholars. The course will cover the Logocratic method (a systematic approach for evaluating the strengths and weaknesses of arguments,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>30</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>13/07/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>In person fee: 650 €. On-line fee: 450 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Apply formal logical methods (including propositional and predicate logic.</li>
-                <li>Analyse and structure legal rules and legal arguments.</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://www.eui.eu/apply?id=summer-school-on-law-and-logic" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/UNIBO-1-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">AI Fundamentals</span>
-              <span class="tag">Data</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>MOOC Data Science - KDD process</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>Data Science, along with Artificial Intelligence and Machine Learning, appears today as the holy grail of information society evolution, but if not reaching so far, they are certainly fundamental pieces in the 4th industrial revolution....</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>Approximately 3 hours</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>N/A</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>N/A</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Have a complete understanding of the information discovery process to its full extent, and to be able to perform it over tabular d...</li>
-                <li>To be able to characterize the data to be explored, analyzing their weaknesses and opportunities, and to know the typical preparat...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://courses.elearning.tecnico.ulisboa.pt/learning/course/course-v1:MOOCs+datascience_kddX+S2_25-26/home" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-15-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Cybersecurity</span>
-              <span class="tag">English</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>Operacional de Cibersegurança Defensiva - Blue Team (Defensive Cybersecurity Operations - Blue Team)</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>Cyber threats are growing in scale and sophistication, affecting the vast majority of organisations across both the public and private sectors. The ability to prevent, detect,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>52</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>07/09/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>2.250 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Configure and implement defensive systems — including intrusion detection and prevention systems, firewalls, and honeypots — and i...</li>
-                <li>Conduct malware analysis using passive and active techniques and Ghidra, and build a functional malware analysis laboratory.</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://tecnicomais.pt/cursos/ciberseguranca-operacional-blue-team/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-10-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Strategy</span>
-              <span class="tag">Data</span>
-              <span class="tag">English</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>Data Science e Análise Não-Supervisionada (Data Science and Unsupervised Analysis)</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>Data science derives its richness from the confluence of artificial intelligence, databases, and statistics — a combination that has produced a wide range of complementary methods for extracting value from data. While classification and supervised learning have driven much of the field's success,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>25</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>N/A</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>1.080 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Apply clustering algorithms — including hierarchical methods, DBSCAN, k-means, and EM — to partition multivariate datasets,...</li>
-                <li>Discover significant patterns in multivariate, transactional, and temporal data structures using association rules, sequential pat...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://tecnicomais.pt/cursos/dash-data-science-e-analise-nao-supervisionada/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-14-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Design And Development</span>
-              <span class="tag">English</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>AI-Driven Development: Metodologias e Práticas para Desenvolvimento Assistido por IA (AI-Driven Development: Methodologies and Practices for AI-Assisted Development)</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>Artificial intelligence is profoundly reshaping how software is conceived, specified, and built. The true differentiator in this new paradigm is no longer the speed of writing code, but the ability to structure problems clearly, define precise specifications,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>8</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>09/05/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>750 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Explain the structural shift from code-first to specification-first development and assess the real capabilities, limitations,...</li>
-                <li>Apply a structured specification-first methodology to translate vague requirements into clear, actionable technical specifications...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://tecnicomais.pt/cursos/ai-driven-development-metodologias-e-praticas-para-desenvolvimento-assistido-por-ia/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-13-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Strategy</span>
-              <span class="tag">English</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>Inteligência Artificial no Contexto do Lean Six Sigma (AI in the Context of Lean Six Sigma)</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>The rapid evolution of Artificial Intelligence — and in particular of generative models and Large Language Models — is transforming the way organisations analyse data, optimise processes, and make decisions....</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>30</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>22/05/2026</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>1.300 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Explain the core principles and methodology of Lean Six Sigma and evaluate how Generative AI and Large Language Models can augment...</li>
-                <li>Describe the fundamentals of Artificial Intelligence — including Generative AI, Machine Learning, and LLMs — and assess their pote...</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://tecnicomais.pt/cursos/lean-six-sigma-no-contexto-da-inteligencia-artificial/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-12-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-main">
-            <div class="tag-row">
-              <span class="tag">Strategy</span>
-              <span class="tag">Data</span>
-              <span class="tag">English</span>
-              <span class="tag">Portuguese</span>
-            </div>
-            <h3>Business Intelligence e Analítica Avançada de Dados com Power BI (Business Intelligence and Advanced Data Analysis with Power BI)</h3>
-            <div class="institution">Instituto Superior Técnico - University of Lisbon</div>
-            <p>"The explosion in data volume and the growing diversity of information sources are transforming the way organisations make decisions. With the advancement of artificial intelligence, big data, and the integration of these technologies into Business Intelligence platforms,...</p>
-          </div>
-          <div class="course-meta">
-            <div class="meta-grid">
-              <div class="meta">
-                <span>Teaching hours</span>
-                <strong>28</strong>
-              </div>
-              <div class="meta">
-                <span>Start date</span>
-                <strong>N/A</strong>
-              </div>
-              <div class="meta">
-                <span>Price</span>
-                <strong>1.200 €</strong>
-              </div>
-              <div class="meta">
-                <span>Language</span>
-                <strong>English, Portuguese</strong>
-              </div>
-            </div>
-            <div class="outcomes">
-              <strong>What learners gain</strong>
-              <ul>
-                <li>Use Power BI to transform raw data into strategic information.</li>
-                <li>Automate data import, transformation, and analysis processes to improve operational efficiency.</li>
-              </ul>
-            </div>
-            <div class="card-actions">
-              <a class="button primary" href="https://tecnicomais.pt/cursos/business-intelligence-e-analitica-avancada-de-dados/" target="_blank" rel="noreferrer">Register</a>
-              <a class="button secondary" href="https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-11-03-26-E-.pdf" target="_blank" rel="noreferrer">Syllabus</a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="list-limit-note">
-        <div>
-          <strong>Showing 12 of 50 matching courses</strong>
-          <span>Refine the filters or load more results to continue exploring available extracurricular activities.</span>
+      <div class="filters" aria-label="Course filters">
+        <div class="control">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Title, provider or keyword" autocomplete="off">
         </div>
-        <a class="button primary" href="#">Load 12 more</a>
+        <div class="control">
+          <label for="topic">Topic</label>
+          <select id="topic"><option value="all">All topics</option></select>
+        </div>
+        <div class="control">
+          <label for="status">Status</label>
+          <select id="status">
+            <option value="available">All active statuses</option>
+            <option value="all">All statuses</option>
+            <option value="open">Open / upcoming</option>
+            <option value="closed">Registration closed</option>
+            <option value="pending">Confirmation needed</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="provider">Provider</label>
+          <select id="provider"><option value="all">All providers</option></select>
+        </div>
+        <button class="button reset" id="reset" type="button">Reset</button>
+      </div>
+
+      <div class="result-bar">
+        <div class="result-count" id="resultCount" aria-live="polite"></div>
+        <div class="result-options">
+          <label><input type="checkbox" id="includeArchived"> Include archived editions</label>
+          <label for="pageSize">Show
+            <select id="pageSize">
+              <option value="6">6</option>
+              <option value="12" selected>12</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="course-list" id="courseList"></div>
+      <div class="pagination" id="pagination">
+        <button class="button subtle" id="previousPage" type="button">Previous</button>
+        <span class="page-label" id="pageLabel"></span>
+        <button class="button subtle" id="nextPage" type="button">Next</button>
+      </div>
+    </section>
+
+    <section class="principles" id="quality" aria-labelledby="quality-title">
+      <div>
+        <h2 id="quality-title">Designed to stay useful as the catalogue grows</h2>
+        <p>The page separates an activity from its editions, so a new intake can be added without overwriting or losing the historical record.</p>
+      </div>
+      <div class="principle-grid">
+        <div class="principle"><strong>Edition history</strong><span>All known dates remain visible under each recurrent activity.</span></div>
+        <div class="principle"><strong>Safe registration</strong><span>Unavailable links become status messages instead of broken buttons.</span></div>
+        <div class="principle"><strong>Archive by default</strong><span>Completed editions move below active opportunities without disappearing.</span></div>
+        <div class="principle"><strong>Source and review date</strong><span>Every card shows when its public information was last checked.</span></div>
       </div>
     </section>
   </main>
 
-  <footer class="footer-band">
+  <footer>
     <div class="footer-inner">
-      <p>Successful participants receive an interoperable AI4Gov-X Open Badge to recognise and share the skills and competencies acquired.</p>
-      <a class="button" href="#">Back to top</a>
+      <p>Successful participants can receive an interoperable AI4Gov-X Open Badge recognising the skills and competencies acquired.</p>
+      <a class="button" href="#top">Back to top</a>
     </div>
   </footer>
-  <script>
-    const viewButtons = document.querySelectorAll("[data-view]");
-    const modeHint = document.getElementById("modeHint");
 
-    viewButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const compact = button.dataset.view === "compact";
-        document.body.classList.toggle("compact-mode", compact);
-        viewButtons.forEach((item) => item.classList.toggle("active", item === button));
-        modeHint.textContent = compact
-          ? "Compact view is optimised for scanning many courses quickly."
-          : "Card view shows descriptions and learning outcomes.";
+  <script>
+    const courses = [
+      {
+        id: 1,
+        title: "The AI Act and EU standards: what it means for compliance",
+        provider: "VUCABLE SRL",
+        topic: "AI governance",
+        language: "English",
+        hours: "3 hours",
+        start: "28 Sep or 13 Oct 2026",
+        price: "€240 excl. VAT",
+        status: "open",
+        statusLabel: "Registration open",
+        recurrent: true,
+        summary: "A practical module on harmonised standards under the EU AI Act and their operational implications for public organisations.",
+        outcomes: ["Connect AI Act obligations with harmonised standards.", "Translate compliance concepts into practical next steps."],
+        editions: ["28 September 2026 · 09:00–12:00", "13 October 2026 · 09:00–12:00"],
+        registerUrl: "https://www.vucable.com/Training-AI-Act.html",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/VUC-2-04-26-E-1.pdf"
+      },
+      {
+        id: 2,
+        title: "Digital transformation and adoption 101: how to select the best use case",
+        provider: "VUCABLE SRL",
+        topic: "Digital transformation",
+        language: "English",
+        hours: "3 hours",
+        start: "21 Sep or 19 Oct 2026",
+        price: "€240 excl. VAT",
+        status: "open",
+        statusLabel: "Registration open",
+        recurrent: true,
+        summary: "A hands-on introduction to identifying and prioritising realistic, high-value digital transformation use cases.",
+        outcomes: ["Assess use cases by value, feasibility and readiness.", "Recognise adoption risks before implementation."],
+        editions: ["21 September 2026 · 09:00–12:00", "19 October 2026 · 09:00–12:00"],
+        registerUrl: "https://www.vucable.com/Training-Use-Case.html",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/VUC-1-04-26-E-1.pdf"
+      },
+      {
+        id: 3,
+        title: "Collaborating with startups and GovTechs: hands-on workshop",
+        provider: "VUCABLE SRL",
+        topic: "GovTech",
+        language: "English",
+        hours: "3 hours",
+        start: "November 2026 · exact date TBC",
+        price: "€480 excl. VAT",
+        status: "pending",
+        statusLabel: "Date confirmation needed",
+        recurrent: true,
+        summary: "A practical workshop on identifying, engaging and working effectively with startups and GovTech providers.",
+        outcomes: ["Structure effective public–startup collaboration.", "Identify procurement and adoption risks early."],
+        editions: ["November 2026 · exact Brussels date to be confirmed"],
+        registerUrl: "https://www.vucable.com/Training-Startups-GovTech.html",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/VUC-3-04-26-E-1.pdf"
+      },
+      {
+        id: 4,
+        title: "Fundamentos da Ciência de Dados",
+        provider: "Instituto Superior Técnico – University of Lisbon",
+        topic: "Data",
+        language: "Portuguese",
+        hours: "25 hours",
+        start: "15 October 2026",
+        price: "See provider page",
+        status: "upcoming",
+        statusLabel: "Upcoming edition",
+        recurrent: true,
+        summary: "Foundations of data science, including data preparation, exploration and the analytical workflow.",
+        outcomes: ["Understand the stages of a data-science project.", "Prepare and explore datasets for analysis."],
+        editions: ["15 October 2026 · current edition", "1 June 2026 · completed"],
+        registerUrl: "https://tecnicomais.pt/cursos/fundamentos-da-ciencia-de-dados",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/ADIST-17-04-26-E.pdf"
+      },
+      {
+        id: 5,
+        title: "Data Visualization",
+        provider: "POLI.design",
+        topic: "Data",
+        language: "English",
+        hours: "40 hours",
+        start: "17 Jun–17 Jul 2027",
+        price: "€2,200",
+        status: "upcoming",
+        statusLabel: "Next edition published",
+        recurrent: true,
+        summary: "A professional course on turning complex datasets into clear, persuasive and responsible visual narratives.",
+        outcomes: ["Select appropriate visual forms for different data.", "Build legible, audience-aware data narratives."],
+        editions: ["17 June–17 July 2027 · next edition", "7 May 2026 · completed"],
+        registerUrl: "https://www.polidesign.net/it/formazione/communication-design/corso--data-visualization/",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/POLI-4-04-26-E.pdf"
+      },
+      {
+        id: 6,
+        title: "Leading with Data-Driven Strategies & Analytics",
+        provider: "ESSEC Business School",
+        topic: "Strategy",
+        language: "English",
+        hours: "3 days",
+        start: "30 November 2026",
+        price: "Fee to be reconfirmed",
+        status: "upcoming",
+        statusLabel: "Upcoming edition",
+        recurrent: true,
+        summary: "An executive programme on using data and analytics to shape strategic decisions and organisational performance.",
+        outcomes: ["Frame strategic decisions with data.", "Connect analytical capability with organisational leadership."],
+        editions: ["30 November 2026 · next edition", "1 June 2026 · completed"],
+        registerUrl: "https://www.essec.edu/en/program/leading-data-driven-strategies-analytics/",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/04/ESSEC-1-03-26-E-.pdf"
+      },
+      {
+        id: 7,
+        title: "AI-Driven Development",
+        provider: "Instituto Superior Técnico – University of Lisbon",
+        topic: "AI development",
+        language: "Portuguese",
+        hours: "8 hours",
+        start: "24 October 2026",
+        price: "€750",
+        status: "upcoming",
+        statusLabel: "Upcoming edition",
+        recurrent: true,
+        summary: "Specification-first methods and practical patterns for building software with generative AI assistance.",
+        outcomes: ["Translate requirements into precise specifications.", "Use AI-assisted development tools critically and safely."],
+        editions: ["24 October 2026 · current edition", "9 May 2026 · completed"],
+        registerUrl: "https://tecnicomais.pt/cursos/ai-driven-development-metodologias-e-praticas-para-desenvolvimento-assistido-por-ia/",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-13-03-26-E-.pdf"
+      },
+      {
+        id: 8,
+        title: "Cibersegurança Operacional – Blue Team",
+        provider: "Instituto Superior Técnico – University of Lisbon",
+        topic: "Cybersecurity",
+        language: "Portuguese / English",
+        hours: "52 hours",
+        start: "7 September 2026",
+        price: "€2,250",
+        status: "upcoming",
+        statusLabel: "Upcoming edition",
+        recurrent: false,
+        summary: "Operational defensive cybersecurity covering monitoring, malware analysis and incident prevention.",
+        outcomes: ["Configure defensive monitoring systems.", "Build and use a malware-analysis environment."],
+        editions: ["7 September 2026"],
+        registerUrl: "https://tecnicomais.pt/cursos/ciberseguranca-operacional-blue-team/",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-10-03-26-E-.pdf"
+      },
+      {
+        id: 9,
+        title: "Inteligência Artificial Generativa (Com AGENTIC AI)",
+        provider: "Instituto Superior Técnico – University of Lisbon",
+        topic: "Generative AI",
+        language: "Portuguese",
+        hours: "28 hours",
+        start: "7–21 November 2026",
+        price: "€1,580",
+        status: "upcoming",
+        statusLabel: "Upcoming edition",
+        recurrent: false,
+        summary: "Generative AI and agentic-system concepts, tools and applications for organisational contexts.",
+        outcomes: ["Distinguish generative and agentic AI patterns.", "Assess suitable organisational applications and risks."],
+        editions: ["7–21 November 2026"],
+        registerUrl: "https://tecnicomais.pt/cursos/inteligencia-artificial-generativa-com-agentic-ai/",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/04/ADIST-3-03-26-E-1.pdf"
+      },
+      {
+        id: 10,
+        title: "Digital Product Discovery and Strategy",
+        provider: "Estonian Business School",
+        topic: "Product strategy",
+        language: "English",
+        hours: "8 ECTS",
+        start: "4 Sep–16 Oct 2026",
+        price: "€2,800",
+        status: "closed",
+        statusLabel: "Registration closed",
+        recurrent: true,
+        summary: "Customer discovery, product strategy and evidence-based prioritisation for digital products and services.",
+        outcomes: ["Run discovery research and synthesise customer evidence.", "Connect product opportunities with a coherent strategy."],
+        editions: ["4 September–16 October 2026 · applications closed 17 August"],
+        registerUrl: "https://www.ebs.ee/en/continuing-education/microdegrees/digital-product-discovery-and-strategy",
+        syllabusUrl: ""
+      },
+      {
+        id: 11,
+        title: "Summer School LEX: LegalXML Standards, Legal Analytics and AI",
+        provider: "University of Bologna",
+        topic: "AI and law",
+        language: "English",
+        hours: "30 hours",
+        start: "7–12 September 2026",
+        price: "See provider page",
+        status: "closed",
+        statusLabel: "Registration closed",
+        recurrent: true,
+        summary: "A summer school connecting LegalXML standards, legal analytics and artificial intelligence.",
+        outcomes: ["Understand standards for machine-readable legal information.", "Relate legal analytics methods to practical AI applications."],
+        editions: ["7–12 September 2026 · enrolment closed 20 July"],
+        registerUrl: "https://site.unibo.it/lex/en",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/UNIBO-3-04-26-E.pdf"
+      },
+      {
+        id: 12,
+        title: "13th International Summer School on Digital Government – OpenGov2026",
+        provider: "University of the Aegean",
+        topic: "Digital government",
+        language: "English",
+        hours: "5 days",
+        start: "6–10 July 2026",
+        price: "€500",
+        status: "completed",
+        statusLabel: "Completed edition",
+        recurrent: true,
+        summary: "An intensive summer school on contemporary digital-government policy, practice and research.",
+        outcomes: ["Examine current digital-government challenges.", "Exchange methods and experience across institutions."],
+        editions: ["6–10 July 2026 · completed", "Future editions · to be announced"],
+        registerUrl: "https://summer-schools.aegean.gr/en/opengov2026",
+        syllabusUrl: "https://ai4gov-x.eu/wp-content/uploads/2026/05/UAE-3-04-26-E.pdf"
+      }
+    ];
+
+    const state = { query: "", topic: "all", provider: "all", status: "available", includeArchived: false, page: 1, pageSize: 12 };
+    const statusOrder = { open: 0, upcoming: 1, pending: 2, closed: 3, completed: 4 };
+
+    const elements = {
+      search: document.getElementById("search"),
+      topic: document.getElementById("topic"),
+      provider: document.getElementById("provider"),
+      status: document.getElementById("status"),
+      reset: document.getElementById("reset"),
+      includeArchived: document.getElementById("includeArchived"),
+      pageSize: document.getElementById("pageSize"),
+      list: document.getElementById("courseList"),
+      count: document.getElementById("resultCount"),
+      pagination: document.getElementById("pagination"),
+      previous: document.getElementById("previousPage"),
+      next: document.getElementById("nextPage"),
+      pageLabel: document.getElementById("pageLabel")
+    };
+
+    const uniqueValues = (key) => [...new Set(courses.map(course => course[key]))].sort((a, b) => a.localeCompare(b));
+    uniqueValues("topic").forEach(value => elements.topic.add(new Option(value, value)));
+    uniqueValues("provider").forEach(value => elements.provider.add(new Option(value, value)));
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
+    }
+
+    function courseMatches(course) {
+      const haystack = `${course.title} ${course.provider} ${course.topic} ${course.summary}`.toLowerCase();
+      const queryMatch = !state.query || haystack.includes(state.query);
+      const topicMatch = state.topic === "all" || course.topic === state.topic;
+      const providerMatch = state.provider === "all" || course.provider === state.provider;
+      let statusMatch = true;
+      if (state.status === "available" || state.status === "all") {
+        statusMatch = state.includeArchived || course.status !== "completed";
+      } else {
+        statusMatch = course.status === state.status || (state.status === "open" && course.status === "upcoming");
+      }
+      return queryMatch && topicMatch && providerMatch && statusMatch;
+    }
+
+    function actionFor(course) {
+      if (course.status === "closed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View course page</a>`;
+      if (course.status === "completed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View past edition</a>`;
+      if (course.status === "pending") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View provider page</a>`;
+      return `<a class="button primary" href="${course.registerUrl}" target="_blank" rel="noreferrer">Register on provider site</a>`;
+    }
+
+    function cardTemplate(course) {
+      const syllabus = course.syllabusUrl
+        ? `<a class="button subtle" href="${course.syllabusUrl}" target="_blank" rel="noreferrer">Syllabus</a>`
+        : "";
+      return `
+        <article class="course-card ${course.status === "completed" ? "is-completed" : ""}" data-course-id="${course.id}">
+          <div class="course-body">
+            <div class="card-top">
+              <div class="tag-row">
+                <span class="status-pill status-${course.status}">${escapeHtml(course.statusLabel)}</span>
+                <span class="tag">${escapeHtml(course.topic)}</span>
+                ${course.recurrent ? '<span class="tag recurrent">Recurrent activity</span>' : ""}
+              </div>
+            </div>
+            <h3>${escapeHtml(course.title)}</h3>
+            <div class="provider">${escapeHtml(course.provider)}</div>
+            <p class="course-summary">${escapeHtml(course.summary)}</p>
+            <div class="verification">Information checked against the provider page · 25 Aug 2026</div>
+          </div>
+          <div class="course-side">
+            <div class="meta-grid">
+              <div class="meta"><span>Edition date</span><strong>${escapeHtml(course.start)}</strong></div>
+              <div class="meta"><span>Teaching time</span><strong>${escapeHtml(course.hours)}</strong></div>
+              <div class="meta"><span>Fee</span><strong>${escapeHtml(course.price)}</strong></div>
+              <div class="meta"><span>Language</span><strong>${escapeHtml(course.language)}</strong></div>
+            </div>
+            <div class="card-actions">
+              ${actionFor(course)}
+              ${syllabus}
+              <button class="details-button" type="button" aria-expanded="false" aria-controls="details-${course.id}">View details ↓</button>
+            </div>
+          </div>
+          <div class="details" id="details-${course.id}">
+            <div>
+              <h4>What learners gain</h4>
+              <ul>${course.outcomes.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            </div>
+            <div>
+              <h4>${course.recurrent ? "Known editions" : "Edition"}</h4>
+              <ul class="edition-list">${course.editions.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function render() {
+      const filtered = courses.filter(courseMatches).sort((a, b) => statusOrder[a.status] - statusOrder[b.status] || a.title.localeCompare(b.title));
+      const totalPages = Math.max(1, Math.ceil(filtered.length / state.pageSize));
+      state.page = Math.min(state.page, totalPages);
+      const start = (state.page - 1) * state.pageSize;
+      const pageCourses = filtered.slice(start, start + state.pageSize);
+
+      elements.count.innerHTML = `${filtered.length} <span>${filtered.length === 1 ? "activity" : "activities"} match your filters</span>`;
+      elements.list.innerHTML = pageCourses.length
+        ? pageCourses.map(cardTemplate).join("")
+        : `<div class="empty-state"><strong>No activities match these filters</strong><span>Try clearing one or more filters.</span></div>`;
+      elements.pageLabel.textContent = `Page ${state.page} of ${totalPages}`;
+      elements.previous.disabled = state.page === 1;
+      elements.next.disabled = state.page === totalPages;
+      elements.previous.setAttribute("aria-disabled", String(elements.previous.disabled));
+      elements.next.setAttribute("aria-disabled", String(elements.next.disabled));
+      elements.pagination.hidden = filtered.length <= state.pageSize;
+
+      document.querySelectorAll(".details-button").forEach(button => {
+        button.addEventListener("click", () => {
+          const details = document.getElementById(button.getAttribute("aria-controls"));
+          const open = details.classList.toggle("open");
+          button.setAttribute("aria-expanded", String(open));
+          button.textContent = open ? "Hide details ↑" : "View details ↓";
+        });
       });
+    }
+
+    function updateState(key, value) { state[key] = value; state.page = 1; render(); }
+    elements.search.addEventListener("input", event => updateState("query", event.target.value.trim().toLowerCase()));
+    elements.topic.addEventListener("change", event => updateState("topic", event.target.value));
+    elements.provider.addEventListener("change", event => updateState("provider", event.target.value));
+    elements.status.addEventListener("change", event => updateState("status", event.target.value));
+    elements.includeArchived.addEventListener("change", event => updateState("includeArchived", event.target.checked));
+    elements.pageSize.addEventListener("change", event => updateState("pageSize", Number(event.target.value)));
+    elements.previous.addEventListener("click", () => { state.page -= 1; render(); document.getElementById("catalogue-title").scrollIntoView(); });
+    elements.next.addEventListener("click", () => { state.page += 1; render(); document.getElementById("catalogue-title").scrollIntoView(); });
+    elements.reset.addEventListener("click", () => {
+      Object.assign(state, { query: "", topic: "all", provider: "all", status: "available", includeArchived: false, page: 1, pageSize: 12 });
+      elements.search.value = "";
+      elements.topic.value = "all";
+      elements.provider.value = "all";
+      elements.status.value = "available";
+      elements.includeArchived.checked = false;
+      elements.pageSize.value = "12";
+      render();
     });
+
+    render();
   </script>
 </body>
 </html>
