@@ -531,6 +531,19 @@
   </footer>
 
   <script>
+    const opensAtPageTop = !window.location.hash;
+    if (opensAtPageTop && "scrollRestoration" in history) history.scrollRestoration = "manual";
+
+    function restoreTopOnEntry() {
+      if (!window.location.hash) window.scrollTo(0, 0);
+    }
+
+    if (opensAtPageTop) {
+      window.addEventListener("pageshow", restoreTopOnEntry);
+      window.addEventListener("load", restoreTopOnEntry, { once: true });
+      requestAnimationFrame(() => requestAnimationFrame(restoreTopOnEntry));
+    }
+
     const courses = [
       {
         id: 1,
