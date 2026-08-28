@@ -139,8 +139,8 @@
         url("ai4gov-hero.png") center / cover no-repeat;
       box-shadow: var(--shadow);
     }
-    .hero-content { max-width: 800px; }
-    h1 { margin: 0 0 16px; max-width: 790px; font-size: clamp(42px, 5.4vw, 66px); line-height: 1.03; letter-spacing: -.035em; }
+    .hero-content { width: 100%; max-width: none; }
+    h1 { margin: 0 0 16px; max-width: none; font-size: clamp(32px, 4.25vw, 54px); line-height: 1.03; letter-spacing: -.035em; white-space: nowrap; }
     .hero p { max-width: 690px; margin: 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: rgba(255,255,255,.94); }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .hero-actions .button { border-color: var(--white); }
@@ -332,7 +332,7 @@
       .logo { width: 128px; }
       .hero-shell, .catalogue, .quality-assurance, .footer-inner { width: min(100% - 24px, 1180px); }
       .hero { min-height: 650px; padding: 30px 22px; border-radius: 26px; align-items: end; }
-      h1 { font-size: 38px; }
+      h1 { font-size: 38px; white-space: normal; }
       .hero p { font-size: 16px; line-height: 1.47; }
       .hero-funding-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 19px; }
       .hero-fact { padding: 8px 9px; font-size: 11px; }
