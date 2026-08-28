@@ -47,22 +47,62 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      border-bottom: 1px solid rgba(18, 63, 118, .1);
-      background: rgba(255, 255, 255, .94);
+      padding-top: 14px;
+      background: rgba(247, 251, 254, .94);
       backdrop-filter: blur(14px);
     }
-    .nav {
-      width: min(1180px, calc(100% - 40px));
-      min-height: 78px;
+    .header-primary, .action-nav {
+      width: min(1140px, calc(100% - 40px));
       margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 28px;
     }
-    .logo { width: 152px; display: block; }
-    .nav-links { display: flex; gap: 26px; align-items: center; color: var(--blue-800); font-size: 14px; font-weight: 700; }
-    .nav-links a { text-decoration: none; }
+    .header-primary { min-height: 62px; justify-content: center; gap: 24px; padding: 0 24px; border-radius: 58px 58px 0 0; position: relative; background: #e8f6ff; }
+    .logo { width: 110px; display: block; position: absolute; left: 25px; top: 50%; transform: translateY(-50%); }
+    .primary-links, .action-links { display: flex; align-items: center; gap: 5px; }
+    .primary-links > *, .action-links > * { flex-shrink: 0; }
+    .nav-link, .nav-dropdown summary {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 11px;
+      color: var(--blue-900);
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+      cursor: pointer;
+      list-style: none;
+      white-space: nowrap;
+    }
+    .nav-dropdown summary::-webkit-details-marker { display: none; }
+    .nav-dropdown summary::after { content: "⌄"; margin-left: 6px; color: var(--blue-700); }
+    .nav-link:hover, .nav-dropdown summary:hover, .nav-dropdown[open] summary { background: var(--blue-050); }
+    .action-links .current-section summary { background: var(--blue-800); color: var(--white) !important; }
+    .action-links .current-section summary::after { color: var(--white) !important; }
+    .nav-dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      z-index: 50;
+      min-width: 230px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      display: grid;
+      gap: 2px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .dropdown-menu a { padding: 9px 10px; border-radius: 9px; color: var(--ink); font-size: 13px; font-weight: 650; text-decoration: none; }
+    .dropdown-menu a:hover { background: var(--blue-050); color: var(--blue-800); }
+    .action-bar { background: transparent; }
+    .action-nav { min-height: 48px; justify-content: center; border-radius: 0 0 58px 58px; background: #e8f6ff; }
+    .action-links .nav-link, .action-links .nav-dropdown summary { color: var(--blue-900); }
+    .action-links .nav-link:hover, .action-links .nav-dropdown summary:hover, .action-links .nav-dropdown[open] summary { background: rgba(255,255,255,.75); }
+    .action-links .nav-dropdown summary::after { color: var(--blue-700); }
+    .action-links .dropdown-menu { top: calc(100% + 7px); }
+    .open-call-link { margin-left: 6px; padding: 9px 15px !important; }
+    .mobile-menu { display: none; }
     .nav-cta, .button {
       min-height: 42px;
       border: 1px solid var(--blue-700);
@@ -86,79 +126,54 @@
     .button.subtle { border-color: var(--line); background: var(--blue-050); }
     .button[aria-disabled="true"] { background: var(--slate-bg); border-color: #d7dde2; color: var(--slate); cursor: not-allowed; box-shadow: none; transform: none; }
 
-    .hero-shell { width: min(1240px, calc(100% - 40px)); margin: 24px auto 0; }
+    .hero-shell { width: min(1280px, calc(100% - 40px)); margin: 24px auto 0; }
     .hero {
-      min-height: 430px;
+      min-height: 540px;
       padding: clamp(40px, 6vw, 74px);
       border-radius: 38px;
       display: grid;
       align-items: center;
       color: var(--white);
       background:
-        linear-gradient(92deg, rgba(18, 63, 118, .95) 0%, rgba(30, 116, 213, .84) 47%, rgba(30, 116, 213, .30) 100%),
+        linear-gradient(92deg, rgba(13, 49, 92, .98) 0%, rgba(18, 63, 118, .91) 48%, rgba(30, 116, 213, .30) 100%),
         url("ai4gov-hero.png") center / cover no-repeat;
       box-shadow: var(--shadow);
     }
-    .hero-content { max-width: 760px; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 13px;
-      border: 1px solid rgba(255,255,255,.45);
-      border-radius: 999px;
-      background: rgba(255,255,255,.13);
-      font-size: 13px;
-      font-weight: 750;
-    }
-    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #77e2b4; box-shadow: 0 0 0 4px rgba(119,226,180,.18); }
-    h1 { margin: 22px 0 16px; max-width: 700px; font-size: clamp(42px, 6vw, 67px); line-height: 1.03; letter-spacing: -.035em; }
+    .hero-content { max-width: 800px; }
+    h1 { margin: 0 0 16px; max-width: 790px; font-size: clamp(42px, 5.4vw, 66px); line-height: 1.03; letter-spacing: -.035em; }
     .hero p { max-width: 690px; margin: 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: rgba(255,255,255,.94); }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .hero-actions .button { border-color: var(--white); }
     .hero-actions .button.primary { background: var(--white); color: var(--blue-800); }
     .hero-actions .button.ghost { color: var(--white); background: rgba(255,255,255,.1); }
+    .hero-actions .button.funding-cta { border-color: var(--white); background: var(--white); color: var(--blue-900); }
+    .hero-funding-facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+    .hero-fact { padding: 9px 12px; border: 1px solid rgba(255,255,255,.30); border-radius: 12px; background: rgba(255,255,255,.10); font-size: 12px; font-weight: 700; }
+    .hero-fact strong { display: block; color: var(--white); font-size: 17px; }
+    .hero-funding-note { max-width: 720px !important; margin-top: 10px !important; color: rgba(255,255,255,.78) !important; font-size: 11px !important; line-height: 1.45 !important; }
 
-    .stats {
-      width: min(1080px, calc(100% - 64px));
-      margin: -38px auto 0;
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--white);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .stat { padding: 22px 24px; border-right: 1px solid var(--line); }
-    .stat:last-child { border-right: 0; }
-    .stat strong { display: block; color: var(--blue-700); font-size: 29px; line-height: 1.1; }
-    .stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
-
-    .trust-strip {
+    .quality-assurance {
       width: min(1180px, calc(100% - 40px));
-      margin: 66px auto 0;
-      padding: 22px 24px;
+      margin: 46px auto 0;
+      padding: 30px;
       border: 1px solid var(--blue-100);
-      border-radius: var(--radius-md);
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 18px;
-      background: #eef8ff;
+      border-radius: 24px;
+      display: block;
+      background: var(--white);
+      box-shadow: 0 10px 34px rgba(18, 63, 118, .07);
     }
-    .trust-icon { width: 43px; height: 43px; border-radius: 14px; display: grid; place-items: center; background: var(--white); color: var(--blue-700); font-size: 20px; font-weight: 800; }
-    .trust-strip strong { display: block; color: var(--blue-900); margin-bottom: 2px; }
-    .trust-strip p { margin: 0; color: #49657c; font-size: 14px; }
-    .reviewed { white-space: nowrap; color: var(--blue-800); font-size: 13px; font-weight: 750; }
+    .quality-kicker { color: var(--blue-700); font-size: 11px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .quality-assurance h2 { margin: 5px 0 18px; color: var(--blue-900); font-size: 27px; }
+    .quality-grid { display: grid; gap: 10px; }
+    .quality-item { padding: 18px; border: 1px solid var(--line); border-radius: 16px; display: grid; grid-template-columns: 230px 1fr; gap: 18px; align-items: start; background: #fafdff; }
+    .quality-item strong { display: block; margin-bottom: 7px; color: var(--blue-900); }
+    .quality-assurance p { margin: 0; color: #40576b; font-size: 13px; line-height: 1.65; }
 
-    .catalogue { width: min(1180px, calc(100% - 40px)); margin: 70px auto 90px; }
-    .catalogue-heading { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 28px; margin-bottom: 24px; }
+    .catalogue { width: min(1180px, calc(100% - 40px)); margin: 70px auto 90px; scroll-margin-top: 150px; }
+    #quality { scroll-margin-top: 144px; }
+    .catalogue-heading { margin-bottom: 24px; }
     .catalogue-heading h2 { margin: 0 0 8px; color: var(--blue-900); font-size: clamp(32px, 4vw, 44px); line-height: 1.08; letter-spacing: -.025em; }
     .catalogue-heading p { margin: 0; max-width: 690px; color: var(--muted); font-size: 16px; }
-    .legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 
     .status-pill, .tag {
       display: inline-flex;
@@ -179,10 +194,27 @@
     .status-completed { color: var(--slate); background: var(--slate-bg); }
     .tag { color: var(--blue-800); background: var(--blue-050); border: 1px solid var(--blue-100); }
     .tag.recurrent { color: #654aa5; background: #f3edff; border-color: #dfd1ff; }
+    .tag.funding { color: var(--blue-900); background: #e8f6ff; border-color: #a9d8f5; }
+    .tag.funding::before { content: "★"; font-size: 10px; }
+
+    .funding-callout {
+      margin: 0 0 26px;
+      padding: 22px 24px;
+      border: 1px solid var(--blue-100);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(110deg, #eef8ff, #fbfdff);
+    }
+    .funding-icon { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; background: var(--white); color: var(--blue-700); font-size: 21px; }
+    .funding-callout strong { display: block; color: var(--blue-900); }
+    .funding-callout p { margin: 3px 0 0; color: #5d6570; font-size: 14px; }
 
     .filters {
       position: sticky;
-      top: 90px;
+      top: 142px;
       z-index: 20;
       padding: 16px;
       border: 1px solid var(--line);
@@ -210,6 +242,12 @@
     .control input:hover, .control select:hover { border-color: #9ec9e7; }
     .reset { align-self: stretch; border-color: var(--line); background: var(--blue-050); }
 
+    .active-filters { min-height: 0; margin: 12px 2px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .active-filters[hidden] { display: none; }
+    .filter-chip { border: 1px solid var(--blue-100); border-radius: 999px; padding: 6px 10px; background: var(--blue-050); color: var(--blue-800); font-size: 12px; font-weight: 750; cursor: pointer; }
+    .filter-chip::after { content: " ×"; }
+    .clear-filters { border: 0; padding: 6px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 750; text-decoration: underline; cursor: pointer; }
+
     .result-bar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 20px 2px 14px; }
     .result-count { color: var(--blue-900); font-size: 19px; font-weight: 800; }
     .result-count span { color: var(--muted); font-size: 13px; font-weight: 650; }
@@ -236,6 +274,8 @@
     .course-summary { margin: 13px 0 0; color: #40576b; font-size: 14px; line-height: 1.55; }
     .verification { margin-top: 14px; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
     .verification::before { content: "✓"; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: var(--green-bg); color: var(--green); font-weight: 900; }
+    .verification.review-due::before { content: "!"; background: var(--orange-bg); color: var(--orange); }
+    .funding-note { margin: -4px 0 2px; color: #49657c; font-size: 11px; font-weight: 650; }
 
     .course-side { padding: 20px; display: grid; gap: 15px; align-content: space-between; background: linear-gradient(180deg, #fff, #f5faff); }
     .meta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
@@ -258,113 +298,170 @@
     .pagination { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; }
     .page-label { min-width: 120px; text-align: center; color: var(--muted); font-size: 13px; font-weight: 700; }
 
-    .principles {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto 86px;
-      padding: 34px;
-      border-radius: var(--radius-lg);
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 36px;
-      color: var(--white);
-      background: var(--blue-900);
-    }
-    .principles h2 { margin: 0; font-size: 32px; line-height: 1.12; }
-    .principles p { margin: 12px 0 0; color: #d9eaff; }
-    .principle-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .principle { padding: 16px; border-radius: 15px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.16); }
-    .principle strong { display: block; margin-bottom: 3px; }
-    .principle span { display: block; color: #d9eaff; font-size: 13px; }
-
     footer { background: #0d315c; color: var(--white); }
     .footer-inner { width: min(1180px, calc(100% - 40px)); min-height: 110px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
     .footer-inner p { margin: 0; max-width: 720px; color: #d9eaff; font-size: 14px; }
 
+    @media (max-width: 1120px) {
+      .desktop-navigation, .action-bar { display: none; }
+      .header-primary { justify-content: flex-end; min-height: 70px; border-radius: 999px; }
+      .mobile-menu { display: block; position: relative; }
+      .mobile-menu > summary { border: 1px solid var(--blue-700); border-radius: 999px; padding: 9px 14px; color: var(--blue-800); font-size: 13px; font-weight: 800; list-style: none; cursor: pointer; }
+      .mobile-menu > summary::-webkit-details-marker { display: none; }
+      .mobile-menu > summary::before { content: "☰"; margin-right: 7px; }
+      .mobile-panel { position: absolute; top: calc(100% + 12px); right: 0; width: min(340px, calc(100vw - 24px)); max-height: calc(100vh - 100px); overflow: auto; padding: 12px; border: 1px solid var(--line); border-radius: 18px; display: grid; gap: 4px; background: var(--white); box-shadow: var(--shadow); }
+      .mobile-panel > a, .mobile-submenu > summary { padding: 10px; border-radius: 10px; color: var(--blue-900); font-size: 14px; font-weight: 750; text-decoration: none; list-style: none; cursor: pointer; }
+      .mobile-panel > a:hover, .mobile-submenu > summary:hover { background: var(--blue-050); }
+      .mobile-submenu summary::-webkit-details-marker { display: none; }
+      .mobile-submenu summary::after { content: "+"; float: right; color: var(--blue-700); }
+      .mobile-submenu[open] summary::after { content: "−"; }
+      .mobile-submenu div { margin: 2px 0 7px 9px; padding-left: 9px; border-left: 2px solid var(--blue-100); display: grid; }
+      .mobile-submenu a { padding: 7px 8px; color: #40576b; font-size: 13px; text-decoration: none; }
+      .mobile-submenu.current-section > summary { background: var(--blue-800); color: var(--white); }
+      .mobile-submenu.current-section > summary::after { color: var(--white); }
+      .mobile-open-call { margin-top: 5px; }
+    }
     @media (max-width: 1020px) {
-      .nav-links { display: none; }
       .filters { position: static; grid-template-columns: 1fr 1fr; }
       .filters .control:first-child { grid-column: 1 / -1; }
       .course-card { grid-template-columns: 1fr; }
       .course-body { border-right: 0; border-bottom: 1px solid var(--line); }
-      .principles { grid-template-columns: 1fr; }
     }
     @media (max-width: 720px) {
-      .hero-shell, .catalogue, .trust-strip, .principles, .footer-inner { width: min(100% - 24px, 1180px); }
-      .hero { min-height: 510px; padding: 34px 24px; border-radius: 26px; align-items: end; }
-      .stats { width: min(100% - 36px, 1080px); grid-template-columns: 1fr 1fr; margin-top: 14px; }
-      .stat:nth-child(2) { border-right: 0; }
-      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-      .trust-strip { grid-template-columns: auto 1fr; margin-top: 44px; }
-      .reviewed { grid-column: 2; white-space: normal; }
-      .catalogue-heading { grid-template-columns: 1fr; }
-      .legend { justify-content: flex-start; }
+      .header-primary { width: min(100% - 24px, 1280px); min-height: 70px; }
+      .logo { width: 128px; }
+      .hero-shell, .catalogue, .quality-assurance, .footer-inner { width: min(100% - 24px, 1180px); }
+      .hero { min-height: 650px; padding: 30px 22px; border-radius: 26px; align-items: end; }
+      h1 { font-size: 38px; }
+      .hero p { font-size: 16px; line-height: 1.47; }
+      .hero-funding-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 19px; }
+      .hero-fact { padding: 8px 9px; font-size: 11px; }
+      .hero-fact strong { font-size: 15px; }
+      .hero-actions { margin-top: 18px; }
+      .hero-actions .button { flex: 1 1 100%; }
+      .quality-assurance { padding: 24px; }
+      .quality-item { grid-template-columns: 1fr; gap: 5px; }
+      .funding-callout { grid-template-columns: auto 1fr; }
+      .funding-callout .button { grid-column: 1 / -1; }
       .filters { grid-template-columns: 1fr; }
       .filters .control:first-child { grid-column: auto; }
       .result-bar, .footer-inner { align-items: flex-start; flex-direction: column; }
       .result-options { flex-wrap: wrap; }
       .meta-grid { grid-template-columns: 1fr; }
       .details.open { grid-template-columns: 1fr; }
-      .principle-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#top" aria-label="AI4Gov-X home"><img class="logo" src="ai4gov-logo.png" alt="AI4Gov-X"></a>
-      <div class="nav-links">
-        <a href="#about">How it works</a>
-        <a href="#catalogue">Activities</a>
-        <a href="#quality">Information policy</a>
-      </div>
-      <a class="nav-cta" href="#catalogue">Browse activities</a>
-    </nav>
+    <div class="header-primary">
+      <a href="https://ai4gov-x.eu/" aria-label="AI4Gov-X home"><img class="logo" src="ai4gov-logo.png" alt="AI4Gov-X"></a>
+      <nav class="desktop-navigation" aria-label="Main navigation">
+        <div class="primary-links">
+          <a class="nav-link" href="https://ai4gov-x.eu/">Home</a>
+          <details class="nav-dropdown">
+            <summary>What is AI4Gov-X?</summary>
+            <div class="dropdown-menu">
+              <a href="https://ai4gov-x.eu/strategic-objectives-of-ai4gov-x/">Strategic Objectives</a>
+              <a href="https://ai4gov-x.eu/what-is-ai4gov-x/methodology/">Methodology</a>
+              <a href="https://ai4gov-x.eu/use-our-platforms/certification/">Certification</a>
+            </div>
+          </details>
+          <a class="nav-link" href="https://ai4gov-x.eu/consortium/">Consortium</a>
+          <a class="nav-link" href="https://ai4gov-x.eu/news/">News</a>
+          <a class="nav-link" href="https://ai4gov-x.eu/all-events/">Events</a>
+          <a class="nav-link" href="https://ai4gov-x.eu/contact/">Contact</a>
+        </div>
+      </nav>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <nav class="mobile-panel" aria-label="Mobile navigation">
+          <a href="https://ai4gov-x.eu/">Home</a>
+          <details class="mobile-submenu"><summary>What is AI4Gov-X?</summary><div>
+            <a href="https://ai4gov-x.eu/strategic-objectives-of-ai4gov-x/">Strategic Objectives</a><a href="https://ai4gov-x.eu/what-is-ai4gov-x/methodology/">Methodology</a><a href="https://ai4gov-x.eu/use-our-platforms/certification/">Certification</a>
+          </div></details>
+          <a href="https://ai4gov-x.eu/consortium/">Consortium</a><a href="https://ai4gov-x.eu/news/">News</a><a href="https://ai4gov-x.eu/all-events/">Events</a><a href="https://ai4gov-x.eu/contact/">Contact</a>
+          <details class="mobile-submenu"><summary>What’s in it for me</summary><div>
+            <a href="https://ai4gov-x.eu/whats-in-it-for-me/">Civil Servant</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Policy Maker</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Researcher</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Professional</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Interested in building a career</a>
+          </div></details>
+          <details class="mobile-submenu current-section"><summary>Apply</summary><div>
+            <a href="https://magix.ai4gov-x.eu/">MagiX</a><a href="#catalogue">Extracurricular Activities</a>
+          </div></details>
+          <details class="mobile-submenu"><summary>Use our platforms</summary><div>
+            <a href="https://ai4gov-x.eu/ai4scale/">AI4Scale</a><a href="https://ai4gov-x.eu/ai4engine/">AI4Engine</a><a href="https://ai4gov-x.eu/be-acknowledged/">Dokimazo</a>
+          </div></details>
+          <a class="mobile-open-call" href="https://ai4gov-x.eu/bid-to-our-open-calls/">Bid to our Open Calls</a>
+        </nav>
+      </details>
+    </div>
+    <div class="action-bar">
+      <nav class="action-nav" aria-label="Opportunities navigation">
+        <div class="action-links">
+          <details class="nav-dropdown"><summary>What’s in it for me</summary><div class="dropdown-menu">
+            <a href="https://ai4gov-x.eu/whats-in-it-for-me/">Civil Servant</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Policy Maker</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Researcher</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Professional</a><a href="https://ai4gov-x.eu/whats-in-it-for-me/">Interested in building a career</a>
+          </div></details>
+          <details class="nav-dropdown current-section"><summary>Apply</summary><div class="dropdown-menu">
+            <a href="https://magix.ai4gov-x.eu/">MagiX</a><a href="#catalogue">Extracurricular Activities</a>
+          </div></details>
+          <details class="nav-dropdown"><summary>Use our platforms</summary><div class="dropdown-menu">
+            <a href="https://ai4gov-x.eu/ai4scale/">AI4Scale</a><a href="https://ai4gov-x.eu/ai4engine/">AI4Engine</a><a href="https://ai4gov-x.eu/be-acknowledged/">Dokimazo</a>
+          </div></details>
+          <a class="nav-link open-call-link" href="https://ai4gov-x.eu/bid-to-our-open-calls/">Bid to our Open Calls</a>
+        </div>
+      </nav>
+    </div>
   </header>
 
   <main id="top">
     <section class="hero-shell" aria-labelledby="page-title">
       <div class="hero">
         <div class="hero-content">
-          <span class="eyebrow">Status-aware learning catalogue</span>
-          <h1 id="page-title">Find the right AI4Gov-X activity—and the right edition.</h1>
-          <p>Explore specialised learning in AI governance, data, ethics, cybersecurity and digital transformation. Current, closed and recurrent editions are clearly distinguished.</p>
+          <h1 id="page-title">AI4Gov-X extracurricular activities</h1>
+          <p>Explore courses, workshops and summer schools in AI, data, cybersecurity and digital governance. Financial support may be available through the AI4Gov-X Cascade Funding Call.</p>
+          <div class="hero-funding-facts" aria-label="Funding highlights">
+            <div class="hero-fact"><strong>Up to 50%*</strong>of eligible activity costs</div>
+            <div class="hero-fact"><strong>Up to €5,000*</strong>per person</div>
+            <div class="hero-fact"><strong>28 February 2027*</strong>final scheduled cut-off</div>
+          </div>
+          <p class="hero-funding-note">*Objective 1 of the Financial Support for Third Parties (FSTP) call. Eligible costs include registration fees, travel and accommodation incurred after application. Funding is subject to eligibility, assessment and available funds.</p>
           <div class="hero-actions">
-            <a class="button primary" href="#catalogue">Explore available activities</a>
-            <a class="button ghost" href="#quality">How information is maintained</a>
+            <a class="button funding-cta" href="https://ai4gov-x.eu/bid-to-our-open-calls/" target="_blank" rel="noreferrer">Bid to our Open Calls ↗</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="stats" aria-label="Catalogue summary">
-      <div class="stat"><strong>50</strong><span>activities in the full catalogue</span></div>
-      <div class="stat"><strong>17</strong><span>European learning providers</span></div>
-      <div class="stat"><strong>10</strong><span>focus areas</span></div>
-      <div class="stat"><strong>8</strong><span>countries represented</span></div>
-    </section>
-
-    <section class="trust-strip" id="about" aria-label="Information quality statement">
-      <div class="trust-icon" aria-hidden="true">✓</div>
-      <div>
-        <strong>Clear edition and registration status</strong>
-        <p>Provider links are separated from syllabus files. Closed editions stay visible for transparency, while recurrent activities keep their edition history.</p>
+    <section class="quality-assurance" id="quality" aria-labelledby="quality-title">
+      <span class="quality-kicker">Quality assurance</span>
+      <h2 id="quality-title">Carefully selected courses. Recognised achievements.</h2>
+      <div class="quality-grid">
+        <article class="quality-item">
+          <strong>Aligned with ISO 21001</strong>
+          <p>All extracurricular activities presented here have successfully passed a dedicated quality evaluation in line with the ISO 21001 standard for educational organisations.</p>
+        </article>
+        <article class="quality-item">
+          <strong>Earn an AI4Gov-X Open Badge</strong>
+          <p>By completing any of these courses and achieving a positive assessment, participants will earn an interoperable AI4Gov‑X Open Badge that formally recognises the skills and competencies acquired. These badges can be shared across professional platforms, supporting learners in showcasing their achievements within the international innovation and public‑sector ecosystems.</p>
+        </article>
       </div>
-      <div class="reviewed">Data reviewed 25 August 2026</div>
     </section>
 
     <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
       <div class="catalogue-heading">
         <div>
           <h2 id="catalogue-title">Extracurricular activities</h2>
-          <p>This prototype contains 12 representative activities. Available and upcoming editions appear first; completed editions are archived by default.</p>
-        </div>
-        <div class="legend" aria-label="Status legend">
-          <span class="status-pill status-open">Open / upcoming</span>
-          <span class="status-pill status-closed">Registration closed</span>
-          <span class="status-pill status-pending">Confirmation needed</span>
-          <span class="status-pill status-completed">Completed</span>
+          <p>Browse carefully selected courses, workshops and summer schools from AI4Gov-X partner institutions. Use the filters to compare topics, providers, availability and funding support.</p>
         </div>
       </div>
+
+      <aside class="funding-callout" aria-label="Funding information">
+        <div class="funding-icon" aria-hidden="true">★</div>
+        <div>
+          <strong>Financial Support for Third Parties (FSTP): up to 50% of eligible costs, capped at €5,000 per person*</strong>
+          <p>*Objective 1 can support registration fees, travel and accommodation incurred after application. Eligibility, assessment criteria and available funds apply.</p>
+        </div>
+        <a class="button primary" href="https://ai4gov-x.eu/bid-to-our-open-calls/" target="_blank" rel="noreferrer">Bid to our Open Calls ↗</a>
+      </aside>
 
       <div class="filters" aria-label="Course filters">
         <div class="control">
@@ -378,12 +475,11 @@
         <div class="control">
           <label for="status">Status</label>
           <select id="status">
-            <option value="available">All active statuses</option>
             <option value="all">All statuses</option>
             <option value="open">Open / upcoming</option>
             <option value="closed">Registration closed</option>
-            <option value="pending">Confirmation needed</option>
-            <option value="completed">Completed</option>
+            <option value="pending">Schedule to be confirmed</option>
+            <option value="completed">Past editions</option>
           </select>
         </div>
         <div class="control">
@@ -393,10 +489,20 @@
         <button class="button reset" id="reset" type="button">Reset</button>
       </div>
 
+      <div class="active-filters" id="activeFilters" hidden aria-label="Active filters"></div>
+
       <div class="result-bar">
         <div class="result-count" id="resultCount" aria-live="polite"></div>
         <div class="result-options">
-          <label><input type="checkbox" id="includeArchived"> Include archived editions</label>
+          <label><input type="checkbox" id="fundingOnly"> Funding support available only</label>
+          <label for="sort">Sort
+            <select id="sort">
+              <option value="soonest">Soonest edition</option>
+              <option value="status">Status</option>
+              <option value="title">Title A–Z</option>
+              <option value="provider">Provider A–Z</option>
+            </select>
+          </label>
           <label for="pageSize">Show
             <select id="pageSize">
               <option value="6">6</option>
@@ -415,23 +521,11 @@
       </div>
     </section>
 
-    <section class="principles" id="quality" aria-labelledby="quality-title">
-      <div>
-        <h2 id="quality-title">Designed to stay useful as the catalogue grows</h2>
-        <p>The page separates an activity from its editions, so a new intake can be added without overwriting or losing the historical record.</p>
-      </div>
-      <div class="principle-grid">
-        <div class="principle"><strong>Edition history</strong><span>All known dates remain visible under each recurrent activity.</span></div>
-        <div class="principle"><strong>Safe registration</strong><span>Unavailable links become status messages instead of broken buttons.</span></div>
-        <div class="principle"><strong>Archive by default</strong><span>Completed editions move below active opportunities without disappearing.</span></div>
-        <div class="principle"><strong>Source and review date</strong><span>Every card shows when its public information was last checked.</span></div>
-      </div>
-    </section>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <p>Successful participants can receive an interoperable AI4Gov-X Open Badge recognising the skills and competencies acquired.</p>
+      <p>AI4Gov-X extracurricular activities · Advanced digital skills for the European public sector.</p>
       <a class="button" href="#top">Back to top</a>
     </div>
   </footer>
@@ -446,9 +540,11 @@
         language: "English",
         hours: "3 hours",
         start: "28 Sep or 13 Oct 2026",
+        startDate: "2026-09-28",
+        endDate: "2026-10-13",
         price: "€240 excl. VAT",
-        status: "open",
-        statusLabel: "Registration open",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "A practical module on harmonised standards under the EU AI Act and their operational implications for public organisations.",
         outcomes: ["Connect AI Act obligations with harmonised standards.", "Translate compliance concepts into practical next steps."],
@@ -464,9 +560,11 @@
         language: "English",
         hours: "3 hours",
         start: "21 Sep or 19 Oct 2026",
+        startDate: "2026-09-21",
+        endDate: "2026-10-19",
         price: "€240 excl. VAT",
-        status: "open",
-        statusLabel: "Registration open",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "A hands-on introduction to identifying and prioritising realistic, high-value digital transformation use cases.",
         outcomes: ["Assess use cases by value, feasibility and readiness.", "Recognise adoption risks before implementation."],
@@ -483,8 +581,9 @@
         hours: "3 hours",
         start: "November 2026 · exact date TBC",
         price: "€480 excl. VAT",
-        status: "pending",
-        statusLabel: "Date confirmation needed",
+        manualStatus: "pending",
+        verifiedAt: "2026-08-25",
+        fundingEligible: false,
         recurrent: true,
         summary: "A practical workshop on identifying, engaging and working effectively with startups and GovTech providers.",
         outcomes: ["Structure effective public–startup collaboration.", "Identify procurement and adoption risks early."],
@@ -500,9 +599,11 @@
         language: "Portuguese",
         hours: "25 hours",
         start: "15 October 2026",
+        startDate: "2026-10-15",
+        endDate: "2026-10-15",
         price: "See provider page",
-        status: "upcoming",
-        statusLabel: "Upcoming edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "Foundations of data science, including data preparation, exploration and the analytical workflow.",
         outcomes: ["Understand the stages of a data-science project.", "Prepare and explore datasets for analysis."],
@@ -518,9 +619,11 @@
         language: "English",
         hours: "40 hours",
         start: "17 Jun–17 Jul 2027",
+        startDate: "2027-06-17",
+        endDate: "2027-07-17",
         price: "€2,200",
-        status: "upcoming",
-        statusLabel: "Next edition published",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "A professional course on turning complex datasets into clear, persuasive and responsible visual narratives.",
         outcomes: ["Select appropriate visual forms for different data.", "Build legible, audience-aware data narratives."],
@@ -536,9 +639,11 @@
         language: "English",
         hours: "3 days",
         start: "30 November 2026",
+        startDate: "2026-11-30",
+        endDate: "2026-12-02",
         price: "Fee to be reconfirmed",
-        status: "upcoming",
-        statusLabel: "Upcoming edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "An executive programme on using data and analytics to shape strategic decisions and organisational performance.",
         outcomes: ["Frame strategic decisions with data.", "Connect analytical capability with organisational leadership."],
@@ -554,9 +659,11 @@
         language: "Portuguese",
         hours: "8 hours",
         start: "24 October 2026",
+        startDate: "2026-10-24",
+        endDate: "2026-10-24",
         price: "€750",
-        status: "upcoming",
-        statusLabel: "Upcoming edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "Specification-first methods and practical patterns for building software with generative AI assistance.",
         outcomes: ["Translate requirements into precise specifications.", "Use AI-assisted development tools critically and safely."],
@@ -572,9 +679,11 @@
         language: "Portuguese / English",
         hours: "52 hours",
         start: "7 September 2026",
+        startDate: "2026-09-07",
+        endDate: "2026-09-07",
         price: "€2,250",
-        status: "upcoming",
-        statusLabel: "Upcoming edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: false,
         summary: "Operational defensive cybersecurity covering monitoring, malware analysis and incident prevention.",
         outcomes: ["Configure defensive monitoring systems.", "Build and use a malware-analysis environment."],
@@ -590,9 +699,11 @@
         language: "Portuguese",
         hours: "28 hours",
         start: "7–21 November 2026",
+        startDate: "2026-11-07",
+        endDate: "2026-11-21",
         price: "€1,580",
-        status: "upcoming",
-        statusLabel: "Upcoming edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: false,
         summary: "Generative AI and agentic-system concepts, tools and applications for organisational contexts.",
         outcomes: ["Distinguish generative and agentic AI patterns.", "Assess suitable organisational applications and risks."],
@@ -606,11 +717,14 @@
         provider: "Estonian Business School",
         topic: "Product strategy",
         language: "English",
-        hours: "8 ECTS",
+        hours: "72 hours",
         start: "4 Sep–16 Oct 2026",
+        startDate: "2026-09-04",
+        endDate: "2026-10-16",
+        registrationDeadline: "2026-08-17",
         price: "€2,800",
-        status: "closed",
-        statusLabel: "Registration closed",
+        verifiedAt: "2026-08-25",
+        fundingEligible: true,
         recurrent: true,
         summary: "Customer discovery, product strategy and evidence-based prioritisation for digital products and services.",
         outcomes: ["Run discovery research and synthesise customer evidence.", "Connect product opportunities with a coherent strategy."],
@@ -626,9 +740,12 @@
         language: "English",
         hours: "30 hours",
         start: "7–12 September 2026",
+        startDate: "2026-09-07",
+        endDate: "2026-09-12",
+        registrationDeadline: "2026-07-20",
         price: "See provider page",
-        status: "closed",
-        statusLabel: "Registration closed",
+        verifiedAt: "2026-08-25",
+        fundingEligible: false,
         recurrent: true,
         summary: "A summer school connecting LegalXML standards, legal analytics and artificial intelligence.",
         outcomes: ["Understand standards for machine-readable legal information.", "Relate legal analytics methods to practical AI applications."],
@@ -644,9 +761,11 @@
         language: "English",
         hours: "5 days",
         start: "6–10 July 2026",
+        startDate: "2026-07-06",
+        endDate: "2026-07-10",
         price: "€500",
-        status: "completed",
-        statusLabel: "Completed edition",
+        verifiedAt: "2026-08-25",
+        fundingEligible: false,
         recurrent: true,
         summary: "An intensive summer school on contemporary digital-government policy, practice and research.",
         outcomes: ["Examine current digital-government challenges.", "Exchange methods and experience across institutions."],
@@ -656,8 +775,17 @@
       }
     ];
 
-    const state = { query: "", topic: "all", provider: "all", status: "available", includeArchived: false, page: 1, pageSize: 12 };
+    const OPEN_CALLS_URL = "https://ai4gov-x.eu/bid-to-our-open-calls/";
     const statusOrder = { open: 0, upcoming: 1, pending: 2, closed: 3, completed: 4 };
+    const statusLabels = {
+      open: "Registration open",
+      upcoming: "Upcoming edition",
+      pending: "Schedule to be confirmed",
+      closed: "Registration closed",
+      completed: "Past edition"
+    };
+    const defaultState = { query: "", topic: "all", provider: "all", status: "all", fundingOnly: false, sort: "soonest", page: 1, pageSize: 12 };
+    const state = { ...defaultState };
 
     const elements = {
       search: document.getElementById("search"),
@@ -665,8 +793,10 @@
       provider: document.getElementById("provider"),
       status: document.getElementById("status"),
       reset: document.getElementById("reset"),
-      includeArchived: document.getElementById("includeArchived"),
+      fundingOnly: document.getElementById("fundingOnly"),
+      sort: document.getElementById("sort"),
       pageSize: document.getElementById("pageSize"),
+      activeFilters: document.getElementById("activeFilters"),
       list: document.getElementById("courseList"),
       count: document.getElementById("resultCount"),
       pagination: document.getElementById("pagination"),
@@ -683,45 +813,107 @@
       return String(value).replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
     }
 
+    function toDay(value) {
+      if (!value) return null;
+      return new Date(`${value}T00:00:00`);
+    }
+
+    function today() {
+      const value = new Date();
+      value.setHours(0, 0, 0, 0);
+      return value;
+    }
+
+    function deriveStatus(course, referenceDate = today()) {
+      if (course.manualStatus) return course.manualStatus;
+      const startDate = toDay(course.startDate);
+      const endDate = toDay(course.endDate || course.startDate);
+      const deadline = toDay(course.registrationDeadline);
+      if (endDate && endDate < referenceDate) return "completed";
+      if (startDate && endDate && startDate <= referenceDate && endDate >= referenceDate) return "closed";
+      if (deadline && deadline < referenceDate && startDate && startDate > referenceDate) return "closed";
+      if (startDate && startDate > referenceDate) return "upcoming";
+      return "open";
+    }
+
+    function enrichedCourses() {
+      return courses.map(course => {
+        const computedStatus = deriveStatus(course);
+        const fundingAvailable = course.fundingEligible && computedStatus !== "completed";
+        return { ...course, computedStatus, computedStatusLabel: statusLabels[computedStatus], fundingAvailable };
+      });
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(toDay(value));
+    }
+
+    function reviewFreshness(value) {
+      const age = Math.max(0, Math.floor((today() - toDay(value)) / 86400000));
+      if (age === 0) return { text: "verified today", due: false };
+      if (age === 1) return { text: "verified yesterday", due: false };
+      if (age <= 30) return { text: `verified ${age} days ago`, due: false };
+      if (age <= 90) return { text: `verified ${Math.round(age / 30)} months ago`, due: false };
+      return { text: `review due · last checked ${formatDate(value)}`, due: true };
+    }
+
     function courseMatches(course) {
       const haystack = `${course.title} ${course.provider} ${course.topic} ${course.summary}`.toLowerCase();
       const queryMatch = !state.query || haystack.includes(state.query);
       const topicMatch = state.topic === "all" || course.topic === state.topic;
       const providerMatch = state.provider === "all" || course.provider === state.provider;
+      const fundingMatch = !state.fundingOnly || course.fundingAvailable;
       let statusMatch = true;
-      if (state.status === "available" || state.status === "all") {
-        statusMatch = state.includeArchived || course.status !== "completed";
-      } else {
-        statusMatch = course.status === state.status || (state.status === "open" && course.status === "upcoming");
+      if (state.status === "open") {
+        statusMatch = course.computedStatus === "open" || course.computedStatus === "upcoming";
+      } else if (state.status !== "all") {
+        statusMatch = course.computedStatus === state.status;
       }
-      return queryMatch && topicMatch && providerMatch && statusMatch;
+      return queryMatch && topicMatch && providerMatch && fundingMatch && statusMatch;
+    }
+
+    function sortCourses(items) {
+      const valueForDate = course => course.startDate ? toDay(course.startDate).getTime() : Number.MAX_SAFE_INTEGER;
+      const pastEditionRank = (a, b) => Number(a.computedStatus === "completed") - Number(b.computedStatus === "completed");
+      const sorters = {
+        soonest: (a, b) => pastEditionRank(a, b) || valueForDate(a) - valueForDate(b) || a.title.localeCompare(b.title),
+        status: (a, b) => statusOrder[a.computedStatus] - statusOrder[b.computedStatus] || valueForDate(a) - valueForDate(b),
+        title: (a, b) => pastEditionRank(a, b) || a.title.localeCompare(b.title),
+        provider: (a, b) => pastEditionRank(a, b) || a.provider.localeCompare(b.provider) || a.title.localeCompare(b.title)
+      };
+      return items.sort(sorters[state.sort]);
     }
 
     function actionFor(course) {
-      if (course.status === "closed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View course page</a>`;
-      if (course.status === "completed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View past edition</a>`;
-      if (course.status === "pending") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View provider page</a>`;
-      return `<a class="button primary" href="${course.registerUrl}" target="_blank" rel="noreferrer">Register on provider site</a>`;
+      if (course.computedStatus === "closed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View course page</a>`;
+      if (course.computedStatus === "completed") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View past edition</a>`;
+      if (course.computedStatus === "pending") return `<a class="button subtle" href="${course.registerUrl}" target="_blank" rel="noreferrer">View provider page</a>`;
+      return `<a class="button primary" href="${course.registerUrl}" target="_blank" rel="noreferrer">View registration page</a>`;
     }
 
     function cardTemplate(course) {
       const syllabus = course.syllabusUrl
-        ? `<a class="button subtle" href="${course.syllabusUrl}" target="_blank" rel="noreferrer">Syllabus</a>`
+        ? `<a class="button subtle" href="${course.syllabusUrl}" target="_blank" rel="noreferrer">Course information</a>`
         : "";
+      const funding = course.fundingAvailable
+        ? `<a class="button primary" href="${OPEN_CALLS_URL}" target="_blank" rel="noreferrer">Check FSTP funding</a>`
+        : "";
+      const freshness = reviewFreshness(course.verifiedAt);
       return `
-        <article class="course-card ${course.status === "completed" ? "is-completed" : ""}" data-course-id="${course.id}">
+        <article class="course-card ${course.computedStatus === "completed" ? "is-completed" : ""}" data-course-id="${course.id}">
           <div class="course-body">
             <div class="card-top">
               <div class="tag-row">
-                <span class="status-pill status-${course.status}">${escapeHtml(course.statusLabel)}</span>
+                <span class="status-pill status-${course.computedStatus}">${escapeHtml(course.computedStatusLabel)}</span>
                 <span class="tag">${escapeHtml(course.topic)}</span>
-                ${course.recurrent ? '<span class="tag recurrent">Recurrent activity</span>' : ""}
+                ${course.recurrent ? '<span class="tag recurrent">Multiple editions</span>' : ""}
+                ${course.fundingAvailable ? '<span class="tag funding">Funding available*</span>' : ""}
               </div>
             </div>
             <h3>${escapeHtml(course.title)}</h3>
             <div class="provider">${escapeHtml(course.provider)}</div>
             <p class="course-summary">${escapeHtml(course.summary)}</p>
-            <div class="verification">Information checked against the provider page · 25 Aug 2026</div>
+            <div class="verification ${freshness.due ? "review-due" : ""}">Provider information ${escapeHtml(freshness.text)} · ${formatDate(course.verifiedAt)}</div>
           </div>
           <div class="course-side">
             <div class="meta-grid">
@@ -730,8 +922,10 @@
               <div class="meta"><span>Fee</span><strong>${escapeHtml(course.price)}</strong></div>
               <div class="meta"><span>Language</span><strong>${escapeHtml(course.language)}</strong></div>
             </div>
+            ${course.fundingAvailable ? '<p class="funding-note">*Financial Support for Third Parties (FSTP), Objective 1: up to 50% of eligible costs, capped at €5,000 per person. Application, assessment and available-funds conditions apply.</p>' : ""}
             <div class="card-actions">
               ${actionFor(course)}
+              ${funding}
               ${syllabus}
               <button class="details-button" type="button" aria-expanded="false" aria-controls="details-${course.id}">View details ↓</button>
             </div>
@@ -749,14 +943,58 @@
         </article>`;
     }
 
+    function activeFilterDefinitions() {
+      return [
+        state.query && { key: "query", label: `Search: ${state.query}` },
+        state.topic !== "all" && { key: "topic", label: state.topic },
+        state.provider !== "all" && { key: "provider", label: state.provider },
+        state.status !== "all" && { key: "status", label: `Status: ${elements.status.options[elements.status.selectedIndex].text}` },
+        state.fundingOnly && { key: "fundingOnly", label: "Funding support available" }
+      ].filter(Boolean);
+    }
+
+    function renderActiveFilters() {
+      const filters = activeFilterDefinitions();
+      elements.activeFilters.hidden = filters.length === 0;
+      elements.activeFilters.innerHTML = filters.length
+        ? `${filters.map(filter => `<button class="filter-chip" type="button" data-filter-key="${filter.key}">${escapeHtml(filter.label)}</button>`).join("")}<button class="clear-filters" type="button" data-clear-all>Clear all</button>`
+        : "";
+      elements.activeFilters.querySelectorAll("[data-filter-key]").forEach(button => button.addEventListener("click", () => clearFilter(button.dataset.filterKey)));
+      elements.activeFilters.querySelector("[data-clear-all]")?.addEventListener("click", resetFilters);
+    }
+
+    function syncUrl() {
+      const params = new URLSearchParams();
+      if (state.query) params.set("q", state.query);
+      if (state.topic !== "all") params.set("topic", state.topic);
+      if (state.provider !== "all") params.set("provider", state.provider);
+      if (state.status !== "all") params.set("status", state.status);
+      if (state.fundingOnly) params.set("funding", "1");
+      if (state.sort !== "soonest") params.set("sort", state.sort);
+      if (state.pageSize !== 12) params.set("show", String(state.pageSize));
+      history.replaceState(null, "", `${location.pathname}${params.size ? `?${params}` : ""}${location.hash}`);
+    }
+
+    function syncControls() {
+      elements.search.value = state.query;
+      elements.topic.value = state.topic;
+      elements.provider.value = state.provider;
+      elements.status.value = state.status;
+      elements.fundingOnly.checked = state.fundingOnly;
+      elements.sort.value = state.sort;
+      elements.pageSize.value = String(state.pageSize);
+    }
+
     function render() {
-      const filtered = courses.filter(courseMatches).sort((a, b) => statusOrder[a.status] - statusOrder[b.status] || a.title.localeCompare(b.title));
+      const allCourses = enrichedCourses();
+      const filtered = sortCourses(allCourses.filter(courseMatches));
       const totalPages = Math.max(1, Math.ceil(filtered.length / state.pageSize));
       state.page = Math.min(state.page, totalPages);
-      const start = (state.page - 1) * state.pageSize;
-      const pageCourses = filtered.slice(start, start + state.pageSize);
+      const startIndex = (state.page - 1) * state.pageSize;
+      const pageCourses = filtered.slice(startIndex, startIndex + state.pageSize);
+      const eligibleCount = filtered.filter(course => course.fundingAvailable).length;
 
-      elements.count.innerHTML = `${filtered.length} <span>${filtered.length === 1 ? "activity" : "activities"} match your filters</span>`;
+      elements.count.innerHTML = `${filtered.length} <span>${filtered.length === 1 ? "activity" : "activities"} · ${eligibleCount} with funding available</span>`;
       elements.list.innerHTML = pageCourses.length
         ? pageCourses.map(cardTemplate).join("")
         : `<div class="empty-state"><strong>No activities match these filters</strong><span>Try clearing one or more filters.</span></div>`;
@@ -766,6 +1004,9 @@
       elements.previous.setAttribute("aria-disabled", String(elements.previous.disabled));
       elements.next.setAttribute("aria-disabled", String(elements.next.disabled));
       elements.pagination.hidden = filtered.length <= state.pageSize;
+      syncControls();
+      renderActiveFilters();
+      syncUrl();
 
       document.querySelectorAll(".details-button").forEach(button => {
         button.addEventListener("click", () => {
@@ -778,26 +1019,37 @@
     }
 
     function updateState(key, value) { state[key] = value; state.page = 1; render(); }
+    function clearFilter(key) {
+      const defaults = { query: "", topic: "all", provider: "all", status: "all", fundingOnly: false };
+      updateState(key, defaults[key]);
+    }
+    function resetFilters() {
+      Object.assign(state, defaultState);
+      render();
+    }
+
+    const params = new URLSearchParams(location.search);
+    state.query = (params.get("q") || "").toLowerCase();
+    if (uniqueValues("topic").includes(params.get("topic"))) state.topic = params.get("topic");
+    if (uniqueValues("provider").includes(params.get("provider"))) state.provider = params.get("provider");
+    if (["all", "open", "closed", "pending", "completed"].includes(params.get("status"))) state.status = params.get("status");
+    state.fundingOnly = params.get("funding") === "1";
+    if (["soonest", "status", "title", "provider"].includes(params.get("sort"))) state.sort = params.get("sort");
+    if ([6, 12, 50].includes(Number(params.get("show")))) state.pageSize = Number(params.get("show"));
+
     elements.search.addEventListener("input", event => updateState("query", event.target.value.trim().toLowerCase()));
     elements.topic.addEventListener("change", event => updateState("topic", event.target.value));
     elements.provider.addEventListener("change", event => updateState("provider", event.target.value));
     elements.status.addEventListener("change", event => updateState("status", event.target.value));
-    elements.includeArchived.addEventListener("change", event => updateState("includeArchived", event.target.checked));
+    elements.fundingOnly.addEventListener("change", event => updateState("fundingOnly", event.target.checked));
+    elements.sort.addEventListener("change", event => updateState("sort", event.target.value));
     elements.pageSize.addEventListener("change", event => updateState("pageSize", Number(event.target.value)));
     elements.previous.addEventListener("click", () => { state.page -= 1; render(); document.getElementById("catalogue-title").scrollIntoView(); });
     elements.next.addEventListener("click", () => { state.page += 1; render(); document.getElementById("catalogue-title").scrollIntoView(); });
-    elements.reset.addEventListener("click", () => {
-      Object.assign(state, { query: "", topic: "all", provider: "all", status: "available", includeArchived: false, page: 1, pageSize: 12 });
-      elements.search.value = "";
-      elements.topic.value = "all";
-      elements.provider.value = "all";
-      elements.status.value = "available";
-      elements.includeArchived.checked = false;
-      elements.pageSize.value = "12";
-      render();
-    });
+    elements.reset.addEventListener("click", resetFilters);
 
     render();
+    setInterval(render, 3600000);
   </script>
 </body>
 </html>
