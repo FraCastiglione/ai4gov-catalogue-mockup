@@ -220,7 +220,7 @@
       border: 1px solid var(--line);
       border-radius: 22px;
       display: grid;
-      grid-template-columns: minmax(260px, 1.5fr) repeat(3, minmax(150px, .75fr)) auto;
+      grid-template-columns: minmax(250px, 1.4fr) repeat(4, minmax(135px, .72fr)) auto;
       gap: 11px;
       background: rgba(255,255,255,.96);
       box-shadow: 0 12px 36px rgba(18, 63, 118, .10);
@@ -471,6 +471,10 @@
         <div class="control">
           <label for="topic">Topic</label>
           <select id="topic"><option value="all">All topics</option></select>
+        </div>
+        <div class="control">
+          <label for="language">Language</label>
+          <select id="language"><option value="all">All languages</option></select>
         </div>
         <div class="control">
           <label for="status">Status</label>
@@ -797,12 +801,13 @@
       closed: "Registration closed",
       completed: "Past edition"
     };
-    const defaultState = { query: "", topic: "all", provider: "all", status: "all", fundingOnly: false, sort: "soonest", page: 1, pageSize: 12 };
+    const defaultState = { query: "", topic: "all", language: "all", provider: "all", status: "all", fundingOnly: false, sort: "soonest", page: 1, pageSize: 12 };
     const state = { ...defaultState };
 
     const elements = {
       search: document.getElementById("search"),
       topic: document.getElementById("topic"),
+      language: document.getElementById("language"),
       provider: document.getElementById("provider"),
       status: document.getElementById("status"),
       reset: document.getElementById("reset"),
@@ -819,7 +824,9 @@
     };
 
     const uniqueValues = (key) => [...new Set(courses.map(course => course[key]))].sort((a, b) => a.localeCompare(b));
+    const languageValues = [...new Set(courses.flatMap(course => course.language.split("/").map(value => value.trim())))].sort((a, b) => a.localeCompare(b));
     uniqueValues("topic").forEach(value => elements.topic.add(new Option(value, value)));
+    languageValues.forEach(value => elements.language.add(new Option(value, value)));
     uniqueValues("provider").forEach(value => elements.provider.add(new Option(value, value)));
 
     function escapeHtml(value) {
@@ -871,9 +878,10 @@
     }
 
     function courseMatches(course) {
-      const haystack = `${course.title} ${course.provider} ${course.topic} ${course.summary}`.toLowerCase();
+      const haystack = `${course.title} ${course.provider} ${course.topic} ${course.language} ${course.summary}`.toLowerCase();
       const queryMatch = !state.query || haystack.includes(state.query);
       const topicMatch = state.topic === "all" || course.topic === state.topic;
+      const languageMatch = state.language === "all" || course.language.split("/").map(value => value.trim()).includes(state.language);
       const providerMatch = state.provider === "all" || course.provider === state.provider;
       const fundingMatch = !state.fundingOnly || course.fundingAvailable;
       let statusMatch = true;
@@ -882,7 +890,7 @@
       } else if (state.status !== "all") {
         statusMatch = course.computedStatus === state.status;
       }
-      return queryMatch && topicMatch && providerMatch && fundingMatch && statusMatch;
+      return queryMatch && topicMatch && languageMatch && providerMatch && fundingMatch && statusMatch;
     }
 
     function sortCourses(items) {
@@ -960,6 +968,7 @@
       return [
         state.query && { key: "query", label: `Search: ${state.query}` },
         state.topic !== "all" && { key: "topic", label: state.topic },
+        state.language !== "all" && { key: "language", label: `Language: ${state.language}` },
         state.provider !== "all" && { key: "provider", label: state.provider },
         state.status !== "all" && { key: "status", label: `Status: ${elements.status.options[elements.status.selectedIndex].text}` },
         state.fundingOnly && { key: "fundingOnly", label: "Funding support available" }
@@ -980,6 +989,7 @@
       const params = new URLSearchParams();
       if (state.query) params.set("q", state.query);
       if (state.topic !== "all") params.set("topic", state.topic);
+      if (state.language !== "all") params.set("language", state.language);
       if (state.provider !== "all") params.set("provider", state.provider);
       if (state.status !== "all") params.set("status", state.status);
       if (state.fundingOnly) params.set("funding", "1");
@@ -991,6 +1001,7 @@
     function syncControls() {
       elements.search.value = state.query;
       elements.topic.value = state.topic;
+      elements.language.value = state.language;
       elements.provider.value = state.provider;
       elements.status.value = state.status;
       elements.fundingOnly.checked = state.fundingOnly;
@@ -1033,7 +1044,7 @@
 
     function updateState(key, value) { state[key] = value; state.page = 1; render(); }
     function clearFilter(key) {
-      const defaults = { query: "", topic: "all", provider: "all", status: "all", fundingOnly: false };
+      const defaults = { query: "", topic: "all", language: "all", provider: "all", status: "all", fundingOnly: false };
       updateState(key, defaults[key]);
     }
     function resetFilters() {
@@ -1044,6 +1055,7 @@
     const params = new URLSearchParams(location.search);
     state.query = (params.get("q") || "").toLowerCase();
     if (uniqueValues("topic").includes(params.get("topic"))) state.topic = params.get("topic");
+    if (languageValues.includes(params.get("language"))) state.language = params.get("language");
     if (uniqueValues("provider").includes(params.get("provider"))) state.provider = params.get("provider");
     if (["all", "open", "closed", "pending", "completed"].includes(params.get("status"))) state.status = params.get("status");
     state.fundingOnly = params.get("funding") === "1";
@@ -1052,6 +1064,7 @@
 
     elements.search.addEventListener("input", event => updateState("query", event.target.value.trim().toLowerCase()));
     elements.topic.addEventListener("change", event => updateState("topic", event.target.value));
+    elements.language.addEventListener("change", event => updateState("language", event.target.value));
     elements.provider.addEventListener("change", event => updateState("provider", event.target.value));
     elements.status.addEventListener("change", event => updateState("status", event.target.value));
     elements.fundingOnly.addEventListener("change", event => updateState("fundingOnly", event.target.checked));
